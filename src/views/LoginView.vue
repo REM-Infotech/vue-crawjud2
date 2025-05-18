@@ -3,5 +3,5 @@
 
 </script>
 <template>
-    <div>terste</div>
+    <div>terste 2222</div>
 </template>
