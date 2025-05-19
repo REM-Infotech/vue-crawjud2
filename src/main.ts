@@ -1,5 +1,3 @@
-import "./ipc/CredentialsBehavior";
-import "./ipc/FileBhavior";
 import "./ipc/ThemeBehavior";
 import "./ipc/WinBehavior";
 import { initialize } from "@electron/remote/main/index";
