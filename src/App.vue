@@ -5,8 +5,6 @@ import ChoseThemeView from "./components/ChoseThemeView.vue";
 
 <template>
   <RouterView />
-  <RouterLink :to="{ name: 'dashboard' }">Teste</RouterLink>
-  <button>
-    <RouterLink :to="{ name: 'login'}"> Teste</RouterLink>
-  </button>
+  <ChoseThemeView />
 </template>
+

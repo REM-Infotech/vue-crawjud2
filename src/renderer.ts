@@ -1,31 +1,13 @@
-import "@/assets/scss/main.css";
+import "./assets/scss/main.css";
 import { createBootstrap } from "bootstrap-vue-next";
 import { createPinia } from "pinia";
 import { createApp } from "vue";
-// Add the necessary CSS
+import "./assets/scripts/color-modes";
 import "bootstrap-vue-next/dist/bootstrap-vue-next.css";
 import "bootstrap/dist/css/bootstrap.css";
 
-import { createRouter, createWebHistory } from "vue-router";
+import { router } from "./router";
 import App from "./App.vue";
-
-const routes = [
-  {
-    path: "/",
-    name: "login",
-    component: () => import("./views/LoginView.vue"),
-  },
-  {
-    path: "/dashboard",
-    name: "dashboard",
-    component: () => import("./views/DashboardView.vue"),
-  },
-];
-
-export const router = createRouter({
-  history: createWebHistory(),
-  routes,
-});
 
 const app = createApp(App);
 const bootstrap = createBootstrap();
