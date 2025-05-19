@@ -88,13 +88,20 @@ async function handleSubmit(event: Event) {
 <style lang="scss" scoped>
 @import "../../assets/scss/colors";
 .form-signin {
-  margin-top: 80px;
+  margin-top: 220px;
   width: 55%;
   padding: 1rem;
 }
 
 .form-signin .form-floating:focus-within {
   z-index: 2;
+}
+
+@media screen and (max-width: 1024px) {
+  .form-signin {
+    width: 100%;
+    margin-top: 25px;
+  }
 }
 
 .form-signin #input-1 {

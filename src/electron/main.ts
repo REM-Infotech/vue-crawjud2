@@ -30,10 +30,10 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     icon: icon,
-    minWidth: minWidth,
-    minHeight: minHeight,
-    width: minWidth,
-    height: minHeight,
+    minWidth: 1024,
+    minHeight: 576,
+    width: 1024,
+    height: 576,
     titleBarStyle: titleBarStyle(),
     webPreferences: {
       contextIsolation: true,
