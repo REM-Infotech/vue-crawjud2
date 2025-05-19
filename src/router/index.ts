@@ -21,6 +21,11 @@ const routes = [
     name: "bot_form",
     component: () => import("../views/bots/FormBotView.vue"),
   },
+  {
+    path: "/logs_execution/:pid",
+    name: "logs_execution",
+    component: () => import("../views/bots/LogsExecutionView.vue"),
+  },
 ];
 
 export const router = createRouter({
