@@ -3,23 +3,17 @@ import "@/assets/scss/main.scss";
 import { botRecord } from "@/types/botArray";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { BCardBody } from "bootstrap-vue-next";
-import { computed, onBeforeMount, ref } from "vue";
+import { BContainer } from "bootstrap-vue-next";
+import { computed, onBeforeMount, onUnmounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import DropZone from "./components/FileDropZone.vue";
 import ListFiles from "./components/ListFiles.vue";
 import FormFileCfg from "./FormFileCfg";
 import FormRefs from "./FormRefs";
-const { files, FormBot } = FormRefs();
+const { files, FormBot, selectedFiles, allSelected } = FormRefs();
 const route = useRoute();
 const { addFiles } = FormFileCfg();
 let params: botRecord;
-
-const selectedFiles = ref<string[]>([]);
-
-const allSelected = computed(
-  () => files.value.length > 0 && selectedFiles.value.length === files.value.length,
-);
 
 function toggleSelectAll() {
   if (allSelected.value) {
@@ -53,90 +47,163 @@ function removeSelectedFiles() {
   selectedFiles.value = [];
 }
 
+const nextPage = ref(false);
+
 onBeforeMount(() => {
   params = route.params as unknown as botRecord;
+});
+
+const ex1Options = [
+  { value: null, text: "Please select an option" },
+  { value: "a", text: "This is First option" },
+  { value: "b", text: "Selected Option" },
+  { value: { C: "3PO" }, text: "This is an option with object value" },
+  { value: "d", text: "This one is disabled", disabled: true },
+];
+
+const selected = ref(null);
+
+onUnmounted(() => {
+  nextPage.value = false;
+});
+
+function getVariant() {
+  return allSelected ? "outline-primary" : "outline-danger";
+}
+
+const variant = computed(() => {
+  return allSelected.value ? "outline-warning" : "outline-primary";
 });
 </script>
 
 <template>
   <MainFrame>
-    <BContainer fluid class="mt-4">
+    <BContainer :fluid="!nextPage" class="mt-4">
       <BCard img-top>
         <template #header>
           <h5 class="text-center">{{ params.display_name }}</h5>
         </template>
         <BForm>
           <BCardBody>
-            <BRow class="justify-content-center">
-              <BCol
-                md="3"
-                class="d-flex flex-column dropzone_background responsive_dropzone rounded-2 m-3 p-2"
-              >
-                <DropZone
-                  v-model="FormBot.files"
-                  @files-dropped="addfiles_"
-                  #default="{ dropZoneActive }"
-                  class="rounded-2 flex-grow-1 d-flex flex-column justify-content-center align-items-center"
+            <Transition name="fade" mode="out-in">
+              <BRow v-if="!nextPage" class="justify-content-center">
+                <BCol
+                  md="3"
+                  class="d-flex flex-column dropzone_background responsive_dropzone rounded-2 m-3 p-2"
                 >
-                  <Transition name="fade" mode="out-in">
-                    <div
-                      v-if="dropZoneActive"
-                      class="d-flex flex-column justify-content-center align-items-center"
-                    >
-                      <FontAwesomeIcon :icon="faFileDownload" size="5x" class="mb-3" />
-                      <h5 class="text-center">Arraste e solte os arquivos aqui</h5>
-                    </div>
-                    <div
-                      v-else
-                      class="d-flex flex-column justify-content-center align-items-center"
-                    >
-                      <FontAwesomeIcon :icon="faFileDownload" size="5x" class="mb-3" />
-                      <h5 class="text-center">Clique ou arraste os arquivos aqui</h5>
-                    </div>
-                  </Transition>
-                </DropZone>
-              </BCol>
-              <BCol md="8" class="d-flex flex-column table_background rounded-2 m-3 p-2">
-                <BCard>
-                  <template #header>
-                    <span class="fw-bold">Arquivos</span>
-                  </template>
-                  <BCardBody class="overflow-auto responsive_row">
-                    <TransitionGroup name="list" tag="ul">
-                      <ListFiles
-                        v-for="item in files"
-                        :files="item"
-                        :key="item.name"
-                        :selected="selectedFiles.includes(item.name)"
-                        @update:selected="(selected) => updateSelection(item.name, selected)"
-                      />
-                    </TransitionGroup>
-                  </BCardBody>
-
-                  <template #footer>
-                    <div class="d-flex gap-2">
-                      <BButton variant="outline-primary" class="rounded-2" @click="toggleSelectAll">
-                        <span class="fw-semibold">
-                          {{ allSelected ? "Desmarcar todos" : "Selecionar todos" }}
-                        </span>
-                      </BButton>
-                      <BButton
-                        variant="outline-danger"
-                        class="rounded-2"
-                        @click="removeSelectedFiles"
+                  <DropZone
+                    v-model="FormBot.files"
+                    @files-dropped="addfiles_"
+                    #default="{ dropZoneActive }"
+                    class="rounded-2 flex-grow-1 d-flex flex-column justify-content-center align-items-center"
+                  >
+                    <Transition name="fade" mode="out-in">
+                      <div
+                        v-if="dropZoneActive"
+                        class="d-flex flex-column justify-content-center align-items-center"
                       >
-                        <span class="fw-semibold"> Remover Selecionados </span>
-                      </BButton>
-                    </div>
-                  </template>
-                </BCard>
-              </BCol>
-            </BRow>
+                        <FontAwesomeIcon :icon="faFileDownload" size="5x" class="mb-3" />
+                        <h5 class="text-center">Arraste e solte os arquivos aqui</h5>
+                      </div>
+                      <div
+                        v-else
+                        class="d-flex flex-column justify-content-center align-items-center"
+                      >
+                        <FontAwesomeIcon :icon="faFileDownload" size="5x" class="mb-3" />
+                        <h5 class="text-center">Clique ou arraste os arquivos aqui</h5>
+                      </div>
+                    </Transition>
+                  </DropZone>
+                </BCol>
+                <BCol md="8" class="d-flex flex-column table_background rounded-2 m-3 p-2">
+                  <BCard>
+                    <template #header>
+                      <div class="d-flex">
+                        <h3 class="fw-bold me-auto">Arquivos</h3>
+                        <BButton
+                          variant="outline-primary"
+                          class="rounded-2 ms-auto"
+                          @click="removeSelectedFiles"
+                        >
+                          <span class="fw-semibold"> Planilha modelo </span>
+                        </BButton>
+                      </div>
+                    </template>
+                    <BCardBody class="overflow-auto responsive_row">
+                      <TransitionGroup name="list" tag="ul">
+                        <ListFiles
+                          v-for="item in files"
+                          :files="item"
+                          :key="item.name"
+                          :selected="selectedFiles.includes(item.name)"
+                          @update:selected="(selected) => updateSelection(item.name, selected)"
+                        />
+                      </TransitionGroup>
+                    </BCardBody>
+
+                    <template #footer>
+                      <div class="d-flex gap-2 p-2">
+                        <BButton
+                          v-model:variant="variant"
+                          class="rounded-2"
+                          @click="toggleSelectAll"
+                        >
+                          <span class="fw-semibold">
+                            {{ allSelected ? "Desmarcar todos" : "Selecionar todos" }}
+                          </span>
+                        </BButton>
+                        <BButton
+                          variant="outline-danger"
+                          class="rounded-2"
+                          @click="removeSelectedFiles"
+                        >
+                          <span class="fw-semibold"> Remover Selecionados </span>
+                        </BButton>
+                      </div>
+                    </template>
+                  </BCard>
+                </BCol>
+              </BRow>
+              <BRow v-else-if="nextPage" class="justify-content-center">
+                <BCol md="8" class="d-flex flex-column table_background rounded-2 m-3 p-2">
+                  <BCard>
+                    <template #header>
+                      <span class="fw-bold">Informações complementares</span>
+                    </template>
+                    <BCardBody class="overflow-auto responsive_row">
+                      <div class="d-grid gap-5">
+                        <BFormSelect v-model="selected" :options="ex1Options" size="lg" />
+                        <BFormSelect v-model="selected" :options="ex1Options" size="lg" />
+                        <BFormSelect v-model="selected" :options="ex1Options" size="lg" />
+                      </div>
+                    </BCardBody>
+                  </BCard>
+                </BCol>
+              </BRow>
+            </Transition>
           </BCardBody>
         </BForm>
         <template #footer>
           <div class="d-flex gap-2 justify-content-end">
-            <BButton class="rounded-2" variant="outline-success" size="lg">Próxima Página</BButton>
+            <Transition name="fade" mode="out-in">
+              <BButton
+                v-if="!nextPage"
+                class="rounded-2"
+                variant="outline-success"
+                size="lg"
+                @click="nextPage = !nextPage"
+              >
+                Próxima Página
+              </BButton>
+              <BButton
+                v-else-if="nextPage"
+                variant="outline-success"
+                class="rounded-2"
+                @click="removeSelectedFiles"
+              >
+                <span class="fw-semibold"> Inicializar Execução </span>
+              </BButton>
+            </Transition>
           </div>
         </template>
       </BCard>

@@ -1,12 +1,11 @@
-import type { TDataTables } from "@/types/CustomDTType";
-import type { ColsNumbers, Size } from "bootstrap-vue-next";
-
 import type { TFormBot, TUploadableFile } from "@/types/FormBot";
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 
 export default function () {
-  const show_form_ref = ref(false);
-  const formLoaded = ref(false);
+  const selectedFiles = ref<string[]>([]);
+  const allSelected = computed(
+    () => files.value.length > 0 && selectedFiles.value.length === files.value.length,
+  );
   const FormBot = reactive<TFormBot>({
     system: "",
     state_client: {
@@ -24,31 +23,11 @@ export default function () {
     bot_protocolo: false,
     state_client_type: "",
   });
-  const dynamic_size = ref<Size | "xl">("lg");
-  const column_size = ref<ColsNumbers>(12);
-  const messages_error = ref<string[]>([]);
-  const TitleForm = ref("Carregando");
-  const need_files = ref(true);
-  const need_options = ref(true);
-  const bot_protocolo = ref(false);
-  const state_client_type = ref("");
   const files = ref<TUploadableFile[]>([]);
-  const checked_state = ref(false);
-  const table_file = ref<TDataTables>();
   return {
-    show_form_ref,
-    formLoaded,
+    selectedFiles,
+    allSelected,
     FormBot,
-    table_file,
-    checked_state,
-    TitleForm,
-    need_files,
-    need_options,
-    bot_protocolo,
-    state_client_type,
     files,
-    messages_error,
-    dynamic_size,
-    column_size,
   };
 }
