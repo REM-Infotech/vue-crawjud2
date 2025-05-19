@@ -1,56 +1,63 @@
-import { app, BrowserWindow } from "electron";
-import path from "node:path";
-import started from "electron-squirrel-startup";
+import "./ipc/CredentialsBehavior";
+import "./ipc/FileBhavior";
+import "./ipc/ThemeBehavior";
 import "./ipc/WinBehavior";
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (started) {
-  app.quit();
-}
+import { initialize } from "@electron/remote/main/index";
+import { app, BrowserWindow, screen, Tray } from "electron";
+import isDev from "electron-is-dev";
+import { join } from "path";
+import { icon, modeLoadWindow, titleBarStyle } from "./configs";
 
+export let traywindow: Tray;
 export let mainWindow: BrowserWindow;
 
-const createWindow = () => {
-  // Create the browser window.
+let minWidth = 800;
+let minHeight = 600;
+
+app.setAppUserModelId("com.app.RemDevs.CrawJUD");
+
+const createWindow = async () => {
+  initialize();
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+  [
+    { check: (w: number, h: number) => w <= 800 && h <= 600, minWidth: 640, minHeight: 480 },
+    { check: (w: number, h: number) => w === 1366 && h <= 768, minWidth: 1024, minHeight: 720 },
+    { check: (w: number, h: number) => w === 1920 && h <= 1080, minWidth: 1280, minHeight: 720 },
+  ].forEach((config) => {
+    if (config.check(width, height)) {
+      minWidth = config.minWidth;
+      minHeight = config.minHeight;
+    }
+  });
+
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    icon: icon,
+    minWidth: minWidth,
+    minHeight: minHeight,
+    width: minWidth,
+    height: minHeight,
+    titleBarStyle: titleBarStyle(),
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
+      contextIsolation: true,
+      nodeIntegration: true,
+      preload: join(__dirname, "./preload.js"),
     },
   });
 
-  // and load the index.html of the app.
-  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
-  } else {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
-  }
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  await modeLoadWindow[isDev ? "true" : "false"](mainWindow);
+  await import("./components");
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on("ready", createWindow);
+app.whenReady().then(createWindow);
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on("window-all-closed", () => {
+app.on("window-all-closed", async () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
 });
 
 app.on("activate", () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
