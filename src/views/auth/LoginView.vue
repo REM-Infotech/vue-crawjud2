@@ -89,7 +89,7 @@ async function handleSubmit(event: Event) {
 @import "../../assets/scss/colors";
 .form-signin {
   margin-top: 220px;
-  width: 55%;
+  width: 100%;
   padding: 1rem;
 }
 
@@ -100,7 +100,7 @@ async function handleSubmit(event: Event) {
 @media screen and (max-width: 1024px) {
   .form-signin {
     width: 100%;
-    margin-top: 25px;
+    margin-top: 20px;
   }
 }
 
