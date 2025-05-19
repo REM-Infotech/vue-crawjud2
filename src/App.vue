@@ -9,4 +9,3 @@ import NavbarView from "./components/NavbarView.vue";
   <RouterView />
   <ChoseThemeView />
 </template>
-

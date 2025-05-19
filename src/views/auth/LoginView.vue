@@ -1,50 +1,3 @@
-<template>
-  <main class="d-flex justify-content-center align-items-center main_login" id="mainFrame">
-    <BContainer class="p-5 d-flex justify-content-center">
-      <BForm class="form-signin" @submit="handleSubmit">
-        <IconLogo />
-        <BFormGroup
-          label="Login"
-          label-for="input-1"
-          class="mb-2"
-          :invalid-feedback="invalidFeedbackLogin"
-          :state="stateLogin"
-          floating
-        >
-          <BFormInput
-            id="input-1"
-            v-model="Form.login"
-            :state="stateLogin"
-            placeholder="Login"
-            trim
-          />
-        </BFormGroup>
-        <BFormGroup
-          id="fieldset-2"
-          label="Password"
-          label-for="input-2"
-          class="mb-3"
-          :invalid-feedback="invalidFeedbackPassword"
-          :state="statePassword"
-          label-class="mb-2"
-          floating
-        >
-          <BFormInput
-            id="input-2"
-            v-model="Form.password"
-            :state="statePassword"
-            placeholder="Password"
-            trim
-            type="password"
-          />
-        </BFormGroup>
-        <div class="d-grid gap-0 mt-4">
-          <BButton class="btn-purple" type="submit">Login</BButton>
-        </div>
-      </BForm>
-    </BContainer>
-  </main>
-</template>
 <script setup lang="ts">
 import { BButton, BContainer, BForm, BFormGroup, BFormInput } from "bootstrap-vue-next";
 import { computed, reactive, ref } from "vue";
@@ -86,6 +39,52 @@ async function handleSubmit(event: Event) {
   router.push({ name: "dashboard" });
 }
 </script>
+<template>
+  <BContainer class="form-signin m-auto p-5 d-flex justify-content-center">
+      <BForm @submit="handleSubmit">
+        <IconLogo />
+        <BFormGroup
+          label="Login"
+          label-for="input-1"
+          class="mb-2"
+          :invalid-feedback="invalidFeedbackLogin"
+          :state="stateLogin"
+          floating
+        >
+          <BFormInput
+            id="input-1"
+            v-model="Form.login"
+            :state="stateLogin"
+            placeholder="Login"
+            trim
+          />
+        </BFormGroup>
+        <BFormGroup
+          id="fieldset-2"
+          label="Password"
+          label-for="input-2"
+          class="mb-3"
+          :invalid-feedback="invalidFeedbackPassword"
+          :state="statePassword"
+          label-class="mb-2"
+          floating
+        >
+          <BFormInput
+            id="input-2"
+            v-model="Form.password"
+            :state="statePassword"
+            placeholder="Password"
+            trim
+            type="password"
+          />
+        </BFormGroup>
+        <div class="d-grid gap-0 mt-4">
+          <BButton class="btn-purple" type="submit">Login</BButton>
+        </div>
+      </BForm>
+    </BContainer>
+</template>
+
 <style lang="scss" scoped>
 @import "../../assets/scss/colors";
 .form-signin {
