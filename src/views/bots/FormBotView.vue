@@ -8,44 +8,19 @@ import { computed, onBeforeMount, onUnmounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import DropZone from "./components/FileDropZone.vue";
 import ListFiles from "./components/ListFiles.vue";
-import FormFileCfg from "./FormFileCfg";
-import FormRefs from "./FormRefs";
-const { files, FormBot, selectedFiles, allSelected } = FormRefs();
+import FormSetup from "./FormConfig";
 const route = useRoute();
-const { addFiles } = FormFileCfg();
+const {
+  FormBot,
+  selectedFiles,
+  files,
+  allSelected,
+  removeSelectedFiles,
+  updateSelection,
+  toggleSelectAll,
+  addfiles_,
+} = FormSetup();
 let params: botRecord;
-
-function toggleSelectAll() {
-  if (allSelected.value) {
-    selectedFiles.value = [];
-  } else {
-    selectedFiles.value = files.value.map((f) => f.name);
-  }
-}
-
-function updateSelection(fileName: string, selected: boolean) {
-  if (selected) {
-    if (!selectedFiles.value.includes(fileName)) selectedFiles.value.push(fileName);
-  } else {
-    selectedFiles.value = selectedFiles.value.filter((name) => name !== fileName);
-  }
-}
-const addfiles_ = (filesAppend: File[]) => {
-  const filesPush = addFiles(filesAppend, files);
-
-  FormBot.files.push(...filesPush);
-  files.value.push(...filesPush);
-};
-
-function removeSelectedFiles() {
-  selectedFiles.value.forEach((fileName) => {
-    const index = files.value.findIndex((file) => file.name === fileName);
-    if (index !== -1) {
-      files.value.splice(index, 1);
-    }
-  });
-  selectedFiles.value = [];
-}
 
 const nextPage = ref(false);
 
@@ -140,7 +115,6 @@ const variant = computed(() => {
                         />
                       </TransitionGroup>
                     </BCardBody>
-
                     <template #footer>
                       <div class="d-flex gap-2 p-2">
                         <BButton
@@ -170,7 +144,7 @@ const variant = computed(() => {
                     <template #header>
                       <span class="fw-bold">Informações complementares</span>
                     </template>
-                    <BCardBody class="overflow-auto responsive_row">
+                    <BCardBody class="overflow-auto responsive_options_selector">
                       <div class="d-grid gap-5">
                         <BFormSelect v-model="selected" :options="ex1Options" size="lg" />
                         <BFormSelect v-model="selected" :options="ex1Options" size="lg" />
@@ -215,28 +189,6 @@ const variant = computed(() => {
 @import "../../assets/scss/main.scss";
 @import "../../assets/scss/colors.scss";
 
-.responsive_dropzone {
-  height: 40rem;
-
-  @media (max-height: 768px) {
-    max-height: 22rem;
-  }
-  @media (max-height: 576px) {
-    max-height: 22rem;
-  }
-}
-
-.responsive_row {
-  height: 30rem;
-
-  @media (max-height: 768px) {
-    max-height: 12rem;
-  }
-  @media (max-height: 576px) {
-    max-height: 12rem;
-  }
-}
-
 .dropzone_background {
   transition:
     background-color 0.4s ease,
@@ -249,14 +201,43 @@ const variant = computed(() => {
     color 0.4s ease;
 }
 
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.5s ease;
+.another_options_bg {
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
+
+.responsive_options_selector {
+  height: 55vh;
+
+  @media (max-height: 768px) {
+    max-height: 37vh;
+  }
+  @media (max-height: 576px) {
+    max-height: 22vh;
+  }
+}
+
+.responsive_dropzone {
+  height: 65vh;
+
+  @media (max-height: 768px) {
+    max-height: 47vh;
+  }
+  @media (max-height: 576px) {
+    max-height: 22vh;
+  }
+}
+
+.responsive_row {
+  height: 48vh;
+
+  @media (max-height: 768px) {
+    max-height: 18vh;
+  }
+  @media (max-height: 576px) {
+    max-height: 18vh;
+  }
 }
 
 [data-bs-theme="dark"] {
@@ -299,5 +280,15 @@ const variant = computed(() => {
   .dropzone_background:active {
     background-color: $amethyst-500;
   }
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 </style>

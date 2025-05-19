@@ -68,6 +68,7 @@ function onFileChange(event) {
     <input
       ref="fileInput"
       type="file"
+      accept=".xlsx, .pdf, .docx, .csv"
       multiple
       style="display: none"
       @change="onFileChange"
