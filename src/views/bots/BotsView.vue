@@ -17,6 +17,7 @@ const cards: botRecord[] = botsList;
           :img_src="card.img_src"
           :img_width="card.img_width"
           :img_height="card.img_height"
+          :other_args="card"
         />
       </div>
     </MainFrame>
