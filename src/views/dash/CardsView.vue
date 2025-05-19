@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { BCard, BCardText, BButton } from "bootstrap-vue-next";
-
 const props = defineProps({
   img_src: {
     type: String,
@@ -27,21 +25,40 @@ const props = defineProps({
     type: String,
     default: "dashboard",
   },
+  img_width: {
+    type: Number,
+    default: 100,
+  },
+  img_height: {
+    type: Number,
+    default: 100,
+  },
 });
 </script>
 
 <template>
-  <BCard
-    :title="props.title"
-    :img-src="props.img_src"
-    :img-alt="props.img_alt"
-    :tag="props.tag"
-    img-top
-    style="max-width: 20rem; max-height: 25rem"
-  >
-    <BCardText>
-      {{ props.text }}
+  <BCard img-top style="max-width: 20rem; max-height: 35rem">
+    <template #header>
+      <h5 class="text-center">
+        <RouterLink :to="{ name: props.router_name }" exact-active-class="active">
+          {{ props.title }}
+        </RouterLink>
+      </h5>
+    </template>
+    <BCardImg
+      :src="props.img_src"
+      :alt="props.img_alt"
+      :width="props.img_width"
+      :heigth="props.img_height"
+      class="rounded-4 p-3 bg-dark"
+    />
+    <BCardText class="text-center mt-3 bg-secondary bg-opacity-25 p-3 rounded-4">
+      <span class="fw-semibold">{{ props.text }}</span>
     </BCardText>
-    <BButton href="#" variant="primary">Go somewhere</BButton>
+    <template #footer>
+      <div class="d-grid">
+        <BButton href="#" variant="primary">Go somewhere</BButton>
+      </div>
+    </template>
   </BCard>
 </template>
