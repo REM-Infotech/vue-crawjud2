@@ -7,7 +7,7 @@ import CardsView from "./CardsView.vue";
     <main
       class="d-flex justify-content-center align-items-center overflow-y-auto overflow-x-hidden"
     >
-      <div class="d-flex gap-4 flex-wrap justify-content-center mt-5" id="dashContent">
+      <div class="d-flex gap-4 p-3 flex-wrap justify-content-center mt-5" id="dashContent">
         <CardsView />
         <CardsView />
         <CardsView />
