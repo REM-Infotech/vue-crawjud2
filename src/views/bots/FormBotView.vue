@@ -5,10 +5,10 @@ import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { BContainer } from "bootstrap-vue-next";
 import { computed, onBeforeMount, onUnmounted, ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import DropZone from "./components/FileDropZone.vue";
 import ListFiles from "./components/ListFiles.vue";
-import FormSetup from "./FormConfig";
+import FormSetup from "./resources/FormConfig";
 const route = useRoute();
 const {
   FormBot,
@@ -23,7 +23,7 @@ const {
 let params: botRecord;
 
 const nextPage = ref(false);
-
+const router = useRouter();
 onBeforeMount(() => {
   params = route.params as unknown as botRecord;
 });
@@ -42,23 +42,24 @@ onUnmounted(() => {
   nextPage.value = false;
 });
 
-function getVariant() {
-  return allSelected ? "outline-primary" : "outline-danger";
-}
-
 const variant = computed(() => {
   return allSelected.value ? "outline-warning" : "outline-primary";
 });
+
+async function handleSubmit(event: Event) {
+  event.preventDefault();
+  router.push({ name: "logs_execution", params: { pid: "A1B2C3" } });
+}
 </script>
 
 <template>
   <MainFrame>
     <BContainer :fluid="!nextPage" class="mt-4">
-      <BCard img-top>
-        <template #header>
-          <h5 class="text-center">{{ params.display_name }}</h5>
-        </template>
-        <BForm>
+      <BForm @submit="handleSubmit">
+        <BCard img-top>
+          <template #header>
+            <h5 class="text-center">{{ params.display_name }}</h5>
+          </template>
           <BCardBody>
             <Transition name="fade" mode="out-in">
               <BRow v-if="!nextPage" class="justify-content-center">
@@ -156,31 +157,31 @@ const variant = computed(() => {
               </BRow>
             </Transition>
           </BCardBody>
-        </BForm>
-        <template #footer>
-          <div class="d-flex gap-2 justify-content-end">
-            <Transition name="fade" mode="out-in">
-              <BButton
-                v-if="!nextPage"
-                class="rounded-2"
-                variant="outline-success"
-                size="lg"
-                @click="nextPage = !nextPage"
-              >
-                Próxima Página
-              </BButton>
-              <BButton
-                v-else-if="nextPage"
-                variant="outline-success"
-                class="rounded-2"
-                @click="removeSelectedFiles"
-              >
-                <span class="fw-semibold"> Inicializar Execução </span>
-              </BButton>
-            </Transition>
-          </div>
-        </template>
-      </BCard>
+          <template #footer>
+            <div class="d-flex gap-2 justify-content-end">
+              <Transition name="fade" mode="out-in">
+                <BButton
+                  v-if="!nextPage"
+                  class="rounded-2"
+                  variant="outline-success"
+                  size="lg"
+                  @click="nextPage = !nextPage"
+                >
+                  Próxima Página
+                </BButton>
+                <BButton
+                  v-else-if="nextPage"
+                  variant="outline-success"
+                  class="rounded-2"
+                  type="submit"
+                >
+                  <span class="fw-semibold"> Inicializar Execução </span>
+                </BButton>
+              </Transition>
+            </div>
+          </template>
+        </BCard>
+      </BForm>
     </BContainer>
   </MainFrame>
 </template>
@@ -213,6 +214,7 @@ const variant = computed(() => {
   @media (max-height: 768px) {
     max-height: 37vh;
   }
+
   @media (max-height: 576px) {
     max-height: 22vh;
   }
@@ -224,6 +226,7 @@ const variant = computed(() => {
   @media (max-height: 768px) {
     max-height: 47vh;
   }
+
   @media (max-height: 576px) {
     max-height: 22vh;
   }
@@ -235,6 +238,7 @@ const variant = computed(() => {
   @media (max-height: 768px) {
     max-height: 18vh;
   }
+
   @media (max-height: 576px) {
     max-height: 18vh;
   }
@@ -256,6 +260,7 @@ const variant = computed(() => {
     background-color: $amethyst-700;
     border-color: $scarlet-gum-800;
   }
+
   .dropzone_background:active {
     background-color: $amethyst-900;
   }
@@ -277,6 +282,7 @@ const variant = computed(() => {
     background-color: $amethyst-300;
     border-color: $scarlet-gum-400;
   }
+
   .dropzone_background:active {
     background-color: $amethyst-500;
   }
@@ -286,6 +292,7 @@ const variant = computed(() => {
 .list-leave-active {
   transition: all 0.5s ease;
 }
+
 .list-enter-from,
 .list-leave-to {
   opacity: 0;

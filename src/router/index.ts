@@ -24,7 +24,7 @@ const routes = [
   {
     path: "/logs_execution/:pid",
     name: "logs_execution",
-    component: () => import("../views/bots/LogsExecutionView.vue"),
+    component: () => import("../views/executions/LogsExecutionView.vue"),
   },
 ];
 
