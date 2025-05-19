@@ -6,6 +6,12 @@ import esaj from "@/assets/svg/esaj.svg";
 import { botRecord } from "@/types/botArray";
 import { useRouter } from "vue-router";
 import { BButton } from "bootstrap-vue-next";
+
+import DataTable from "datatables.net-vue3";
+import DataTablesCore from "datatables.net-bs5";
+
+DataTable.use(DataTablesCore);
+
 const images = {
   elaw: elawImg,
   projudi: projudiImg,
