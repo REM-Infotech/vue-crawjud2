@@ -1,13 +1,27 @@
 <script setup lang="ts">
+import CardsView from "./CardsView.vue";
 </script>
 
 <template>
   <div class="vh-50">
-    <main class="d-flex justify-content-center align-items-center p-5" id="mainFrame"></main>
+    <main
+      class="d-flex justify-content-center align-items-center overflow-y-auto overflow-x-hidden"
+    >
+      <div class="d-flex gap-4 flex-wrap justify-content-center mt-5" id="dashContent">
+        <CardsView />
+        <CardsView />
+        <CardsView />
+      </div>
+    </main>
   </div>
 </template>
 <style scoped lang="scss">
-@import "../assets/scss/default.scss";
+@import "../../assets/scss/default.scss";
+
+#dashContent {
+  height: calc(100vh - 115px);
+}
+
 .main_login {
   transition:
     background-color 0.4s ease,
