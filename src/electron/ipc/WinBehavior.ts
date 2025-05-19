@@ -1,20 +1,18 @@
 import { app, ipcMain } from "electron";
 
-/** @type {Promise<import("electron/main").BrowserWindow>} */
-const GetmainWindow = async () => {
+/** Returns the main BrowserWindow instance */
+const GetmainWindow = async (): Promise<import("electron/main").BrowserWindow> => {
   const { mainWindow } = await import("../main");
   return mainWindow;
 };
 
 ipcMain.on("minimize", async () => {
-  /** @type {import("electron/main").BrowserWindow} */
-  const mainWindow = await GetmainWindow();
+  const mainWindow: import("electron/main").BrowserWindow = await GetmainWindow();
   mainWindow.minimize();
 });
 
 ipcMain.on("maximize", async () => {
-  /** @type {import("electron/main").BrowserWindow} */
-  const mainWindow = await GetmainWindow();
+  const mainWindow: import("electron/main").BrowserWindow = await GetmainWindow();
   if (mainWindow.isMaximized()) {
     mainWindow.unmaximize();
   } else {
@@ -23,6 +21,5 @@ ipcMain.on("maximize", async () => {
 });
 
 ipcMain.on("close", async () => {
-  /** @type {import("electron/main").BrowserWindow} */
   app.quit();
 });
