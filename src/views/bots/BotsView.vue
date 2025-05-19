@@ -10,7 +10,6 @@ const cards = [
     img_src: "/src/assets/svg/robot-icon.svg",
     img_width: 300,
     img_height: 200,
-    router_name: "bots",
   },
   {
     title: "Execuções",
@@ -43,7 +42,6 @@ const cards = [
           :img_src="card.img_src"
           :img_width="card.img_width"
           :img_height="card.img_height"
-          :router_name="card.router_name"
         />
       </div>
     </main>

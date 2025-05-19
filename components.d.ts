@@ -8,11 +8,10 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    BButton: typeof import('bootstrap-vue-next/components/BButton')['BButton']
     BCard: typeof import('bootstrap-vue-next/components/BCard')['BCard']
-    BCardBody: typeof import('bootstrap-vue-next/components/BCard')['BCardBody']
     BCardImg: typeof import('bootstrap-vue-next/components/BCard')['BCardImg']
     BCardText: typeof import('bootstrap-vue-next/components/BCard')['BCardText']
+    CardsView: typeof import('./src/components/CardsView.vue')['default']
     ChoseThemeView: typeof import('./src/components/ChoseThemeView.vue')['default']
     NavbarView: typeof import('./src/components/NavbarView.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
