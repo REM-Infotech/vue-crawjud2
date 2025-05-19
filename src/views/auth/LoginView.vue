@@ -40,49 +40,51 @@ async function handleSubmit(event: Event) {
 }
 </script>
 <template>
-  <BContainer class="form-signin p-5 d-flex justify-content-center">
-    <BForm class="" @submit="handleSubmit">
-      <IconLogo />
-      <BFormGroup
-        label="Login"
-        label-for="input-1"
-        class="mb-2"
-        :invalid-feedback="invalidFeedbackLogin"
-        :state="stateLogin"
-        floating
-      >
-        <BFormInput
-          id="input-1"
-          v-model="Form.login"
+  <main class="form-signin">
+    <BContainer class="p-5 w-50 justify-content-center" fluid>
+      <BForm @submit="handleSubmit">
+        <IconLogo />
+        <BFormGroup
+          label="Login"
+          label-for="input-1"
+          class="mb-2"
+          :invalid-feedback="invalidFeedbackLogin"
           :state="stateLogin"
-          placeholder="Login"
-          trim
-        />
-      </BFormGroup>
-      <BFormGroup
-        id="fieldset-2"
-        label="Password"
-        label-for="input-2"
-        class="mb-3"
-        :invalid-feedback="invalidFeedbackPassword"
-        :state="statePassword"
-        label-class="mb-2"
-        floating
-      >
-        <BFormInput
-          id="input-2"
-          v-model="Form.password"
+          floating
+        >
+          <BFormInput
+            id="input-1"
+            v-model="Form.login"
+            :state="stateLogin"
+            placeholder="Login"
+            trim
+          />
+        </BFormGroup>
+        <BFormGroup
+          id="fieldset-2"
+          label="Password"
+          label-for="input-2"
+          class="mb-3"
+          :invalid-feedback="invalidFeedbackPassword"
           :state="statePassword"
-          placeholder="Password"
-          trim
-          type="password"
-        />
-      </BFormGroup>
-      <div class="d-grid gap-0 mt-4">
-        <BButton class="btn-purple" type="submit">Login</BButton>
-      </div>
-    </BForm>
-  </BContainer>
+          label-class="mb-2"
+          floating
+        >
+          <BFormInput
+            id="input-2"
+            v-model="Form.password"
+            :state="statePassword"
+            placeholder="Password"
+            trim
+            type="password"
+          />
+        </BFormGroup>
+        <div class="d-grid gap-0 mt-4">
+          <BButton class="btn-purple" type="submit">Login</BButton>
+        </div>
+      </BForm>
+    </BContainer>
+  </main>
 </template>
 
 <style lang="scss" scoped>
@@ -100,7 +102,7 @@ async function handleSubmit(event: Event) {
 @media screen and (max-width: 1024px) {
   .form-signin {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 5px;
   }
 }
 
@@ -116,7 +118,9 @@ async function handleSubmit(event: Event) {
   border-top-right-radius: 0;
 }
 .btn-purple {
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
   border-radius: 5px;
 }
 
@@ -145,7 +149,9 @@ async function handleSubmit(event: Event) {
   .btn-purple:hover {
     background-color: $purple-heart-700;
     border-color: $purple-heart-700;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    transition:
+      background-color 0.4s ease,
+      color 0.4s ease;
   }
   .btn-purple:active {
     background-color: $purple-heart-500;

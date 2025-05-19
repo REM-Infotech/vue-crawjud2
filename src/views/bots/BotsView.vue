@@ -2,30 +2,12 @@
 import { title } from "process";
 import CardsView from "../../components/CardsView.vue";
 import { fileURLToPath, URL } from "url";
+import botsList from "@/assets/json/bots_list.json";
+import { botRecord } from "@/types/botArray";
 
-const cards = [
-  {
-    title: "Robôs",
-    text: "Páginas com nossa coletânea de robôs para você usar.",
-    img_src: "/src/assets/svg/robot-icon.svg",
-    img_width: 300,
-    img_height: 200,
-  },
-  {
-    title: "Execuções",
-    text: "Listagem de suas execuções realizadas com os robôs.",
-    img_src: "/src/assets/svg/robot-icon.svg",
-    img_width: 300,
-    img_height: 200,
-  },
-  {
-    title: "Agendamentos",
-    text: "Lista de execuções agendadas para os robôs.",
-    img_src: "/src/assets/svg/robot-icon.svg",
-    img_width: 300,
-    img_height: 200,
-  },
-];
+const cards: botRecord[] = botsList;
+
+console.log(cards);
 </script>
 
 <template>
@@ -37,7 +19,7 @@ const cards = [
         <CardsView
           v-for="(card, index) in cards"
           :key="index"
-          :title="card.title"
+          :title="card.display_name"
           :text="card.text"
           :img_src="card.img_src"
           :img_width="card.img_width"

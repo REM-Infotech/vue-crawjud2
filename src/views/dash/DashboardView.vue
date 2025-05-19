@@ -7,7 +7,6 @@ const cards = [
   {
     title: "Robôs",
     text: "Páginas com nossa coletânea de robôs para você usar.",
-    img_src: "/src/assets/svg/robot-icon.svg",
     img_width: 300,
     img_height: 200,
     router_name: "bots",
@@ -15,14 +14,12 @@ const cards = [
   {
     title: "Execuções",
     text: "Listagem de suas execuções realizadas com os robôs.",
-    img_src: "/src/assets/svg/robot-icon.svg",
     img_width: 300,
     img_height: 200,
   },
   {
     title: "Agendamentos",
     text: "Lista de execuções agendadas para os robôs.",
-    img_src: "/src/assets/svg/robot-icon.svg",
     img_width: 300,
     img_height: 200,
   },

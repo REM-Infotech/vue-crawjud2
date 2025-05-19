@@ -28,3 +28,5 @@ interface Window {
 declare module "*.vue" {}
 declare module "*.module.scss" {}
 declare module "*.css" {}
+declare module "*.json" {}
+declare module "*.svg" {}

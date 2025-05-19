@@ -1,4 +1,14 @@
 <script setup lang="ts">
+import projudiImg from "@/assets/svg/projudi.svg";
+import elawImg from "@/assets/svg/elaw.svg";
+import esaj from "@/assets/svg/esaj.svg";
+
+const images = {
+  elaw: elawImg,
+  projudi: projudiImg,
+  esaj: esaj,
+};
+
 const props = defineProps({
   img_src: {
     type: String,
@@ -34,6 +44,14 @@ const props = defineProps({
     default: 100,
   },
 });
+
+function loadImage(img: string): string {
+  if (img.includes("https") || img.includes("http")) {
+    return img;
+  } else {
+    return images[img as keyof typeof images];
+  }
+}
 </script>
 
 <template>
@@ -44,11 +62,11 @@ const props = defineProps({
       </h5>
     </template>
     <BCardImg
-      :src="props.img_src"
+      :src="loadImage(props.img_src)"
       :alt="props.img_alt"
       :width="props.img_width"
       :heigth="props.img_height"
-      class="rounded-4 p-3 bg-dark"
+      class="rounded-1 p-1 bg-dark"
     />
     <BCardText class="text-center mt-3 bg-secondary bg-opacity-25 p-3 rounded-4">
       <span class="fw-semibold">{{ props.text }}</span>
