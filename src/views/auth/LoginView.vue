@@ -40,45 +40,60 @@ async function handleSubmit(event: Event) {
 }
 </script>
 <template>
-  <BForm @submit="handleSubmit">
-    <IconLogo />
-    <BFormGroup
-      label="Login"
-      label-for="input-1"
-      class="mb-2"
-      :invalid-feedback="invalidFeedbackLogin"
-      :state="stateLogin"
-      floating
-    >
-      <BFormInput id="input-1" v-model="Form.login" :state="stateLogin" placeholder="Login" trim />
-    </BFormGroup>
-    <BFormGroup
-      id="fieldset-2"
-      label="Password"
-      label-for="input-2"
-      class="mb-3"
-      :invalid-feedback="invalidFeedbackPassword"
-      :state="statePassword"
-      label-class="mb-2"
-      floating
-    >
-      <BFormInput
-        id="input-2"
-        v-model="Form.password"
+  <div class="box">
+    <BForm @submit="handleSubmit" class="w-25">
+      <IconLogo />
+      <BFormGroup
+        label="Login"
+        label-for="input-1"
+        class="mb-2"
+        :invalid-feedback="invalidFeedbackLogin"
+        :state="stateLogin"
+        floating
+      >
+        <BFormInput
+          id="input-1"
+          v-model="Form.login"
+          :state="stateLogin"
+          placeholder="Login"
+          trim
+        />
+      </BFormGroup>
+      <BFormGroup
+        id="fieldset-2"
+        label="Password"
+        label-for="input-2"
+        class="mb-3"
+        :invalid-feedback="invalidFeedbackPassword"
         :state="statePassword"
-        placeholder="Password"
-        trim
-        type="password"
-      />
-    </BFormGroup>
-    <div class="d-grid gap-0 mt-4">
-      <BButton class="btn-purple" type="submit">Login</BButton>
-    </div>
-  </BForm>
+        label-class="mb-2"
+        floating
+      >
+        <BFormInput
+          id="input-2"
+          v-model="Form.password"
+          :state="statePassword"
+          placeholder="Password"
+          trim
+          type="password"
+        />
+      </BFormGroup>
+      <div class="d-grid gap-0 mt-4">
+        <BButton class="btn-purple" type="submit">Login</BButton>
+      </div>
+    </BForm>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 @import "../../assets/scss/colors";
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
 
 .btn-purple {
   transition:
