@@ -1,6 +1,6 @@
 <template>
-  <main class="d-flex justify-content-center vh-100 align-items-center main_login" id="mainFrame">
-    <BContainer class="p-5 d-flex mt-4 justify-content-center">
+  <main class="d-flex justify-content-center align-items-center main_login" id="mainFrame">
+    <BContainer class="p-5 d-flex justify-content-center">
       <BForm class="form-signin" @submit="handleSubmit">
         <IconLogo />
         <BFormGroup
