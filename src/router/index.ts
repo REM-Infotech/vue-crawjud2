@@ -17,7 +17,7 @@ const routes = [
     component: () => import("../views/bots/BotsView.vue"),
   },
   {
-    path: "/bot/:id/:system/:type",
+    path: "/bot/:id/:system/:type/:display_name",
     name: "bot_form",
     component: () => import("../views/bots/FormBotView.vue"),
   },

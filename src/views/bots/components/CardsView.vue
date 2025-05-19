@@ -61,8 +61,8 @@ function loadImage(img: string): string {
   }
 }
 
-function pushRouter(id: string, system: string, type: string) {
-  router.push({ name: "bot_form", params: { id, system, type } });
+function pushRouter(id: string, system: string, type: string, display_name: string) {
+  router.push({ name: "bot_form", params: { id, system, type, display_name } });
 }
 </script>
 
@@ -86,7 +86,14 @@ function pushRouter(id: string, system: string, type: string) {
     <template #footer>
       <div class="d-grid">
         <BButton
-          @click="pushRouter(props.other_args.id, props.other_args.system, props.other_args.type)"
+          @click="
+            pushRouter(
+              props.other_args.id,
+              props.other_args.system,
+              props.other_args.type,
+              props.other_args.display_name,
+            )
+          "
           variant="primary"
           class="mb-2"
         >
