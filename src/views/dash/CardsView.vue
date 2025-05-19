@@ -40,9 +40,7 @@ const props = defineProps({
   <BCard img-top style="max-width: 20rem; max-height: 35rem">
     <template #header>
       <h5 class="text-center">
-        <RouterLink :to="{ name: props.router_name }" exact-active-class="active">
-          {{ props.title }}
-        </RouterLink>
+        {{ props.title }}
       </h5>
     </template>
     <BCardImg
@@ -57,7 +55,9 @@ const props = defineProps({
     </BCardText>
     <template #footer>
       <div class="d-grid">
-        <BButton href="#" variant="primary">Go somewhere</BButton>
+        <RouterLink :to="{ name: props.router_name }" class="btn btn-primary">
+          <span class="fw-bold">Acessar</span>
+        </RouterLink>
       </div>
     </template>
   </BCard>
