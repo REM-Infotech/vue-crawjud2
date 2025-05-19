@@ -23,6 +23,10 @@ interface Window {
     getCredentials: () => Promise<Array<{ account: string; password: string }>>;
     AlertError: () => Promise<void>;
   };
+
+  ThemeChoser: {
+    toggle: () => Promise<void>;
+  };
 }
 
 declare module "*.vue" {}

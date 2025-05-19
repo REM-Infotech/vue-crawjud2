@@ -1,14 +1,10 @@
 import { ipcMain, nativeTheme } from "electron";
 
-ipcMain.handle("dark-mode:toggle", () => {
-  if (nativeTheme.shouldUseDarkColors) {
-    nativeTheme.themeSource = "light";
-  } else {
-    nativeTheme.themeSource = "dark";
-  }
+ipcMain.handle("setTheme", (event, theme: "system" | "dark" | "light") => {
+  nativeTheme.themeSource = theme;
   return nativeTheme.shouldUseDarkColors;
 });
 
-ipcMain.handle("dark-mode:system", () => {
-  nativeTheme.themeSource = "system";
-});
+// ipcMain.handle("dark-mode:system", () => {
+//   nativeTheme.themeSource = "system";
+// });

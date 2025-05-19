@@ -17,12 +17,14 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
   const setTheme = (theme) => {
     if (theme === "auto") {
-      document.documentElement.setAttribute(
-        "data-bs-theme",
-        window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light",
-      );
+      const matchTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+      document.documentElement.setAttribute("data-bs-theme", matchTheme);
+      window.ThemeChoser.toggle(matchTheme);
     } else {
       document.documentElement.setAttribute("data-bs-theme", theme);
+      window.ThemeChoser.toggle(theme);
     }
   };
 

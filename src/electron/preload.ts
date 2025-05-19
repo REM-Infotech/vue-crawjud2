@@ -19,7 +19,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
   close: () => ipcRenderer.send("close"),
 });
 
-contextBridge.exposeInMainWorld("darkMode", {
-  toggle: () => ipcRenderer.invoke("dark-mode:toggle"),
-  system: () => ipcRenderer.invoke("dark-mode:system"),
+contextBridge.exposeInMainWorld("ThemeChoser", {
+  toggle: (theme: string) => ipcRenderer.invoke("setTheme", theme),
 });
