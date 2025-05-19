@@ -6,6 +6,10 @@ import NavbarView from "./components/NavbarView.vue";
 
 <template>
   <NavbarView />
-  <RouterView />
+  <RouterView v-slot="{ Component }">
+    <transition name="fade">
+      <component :is="Component" />
+    </transition>
+  </RouterView>
   <ChoseThemeView />
 </template>
