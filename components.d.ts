@@ -11,6 +11,7 @@ declare module 'vue' {
     BCard: typeof import('bootstrap-vue-next/components/BCard')['BCard']
     BCardImg: typeof import('bootstrap-vue-next/components/BCard')['BCardImg']
     BCardText: typeof import('bootstrap-vue-next/components/BCard')['BCardText']
+    BContainer: typeof import('bootstrap-vue-next/components/BContainer')['BContainer']
     CardsView: typeof import('./src/components/CardsView.vue')['default']
     ChoseThemeView: typeof import('./src/components/ChoseThemeView.vue')['default']
     MainFrame: typeof import('./src/components/MainFrame.vue')['default']

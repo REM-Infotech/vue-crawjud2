@@ -2,6 +2,7 @@
 import { title } from "process";
 import CardsView from "../../components/CardsView.vue";
 import { fileURLToPath, URL } from "url";
+import MainFrame from "@/components/MainFrame.vue";
 
 const cards = [
   {
@@ -27,17 +28,19 @@ const cards = [
 </script>
 
 <template>
-  <div class="d-flex gap-4 p-3 flex-wrap justify-content-center mt-5" id="dashContent">
-    <CardsView
-      v-for="(card, index) in cards"
-      :key="index"
-      :title="card.title"
-      :text="card.text"
-      :img_width="card.img_width"
-      :img_height="card.img_height"
-      :router_name="card.router_name"
-    />
-  </div>
+  <MainFrame>
+    <div class="d-flex gap-4 p-3 flex-wrap justify-content-center mt-5" id="dashContent">
+      <CardsView
+        v-for="(card, index) in cards"
+        :key="index"
+        :title="card.title"
+        :text="card.text"
+        :img_width="card.img_width"
+        :img_height="card.img_height"
+        :router_name="card.router_name"
+      />
+    </div>
+  </MainFrame>
 </template>
 <style scoped lang="scss">
 @import "../../assets/scss/default.scss";
