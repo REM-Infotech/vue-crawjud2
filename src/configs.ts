@@ -22,7 +22,7 @@ export const modeLoadWindow: LoadWindow = {
     await mainWindow.loadURL("http://localhost:5173");
   },
   false: async (mainWindow: BrowserWindow) => {
-    mainWindow.loadFile(join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
+    await mainWindow.loadFile(join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   },
 };
 
