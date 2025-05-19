@@ -7,39 +7,37 @@ const cards = [
   {
     title: "Robôs",
     text: "Páginas com nossa coletânea de robôs para você usar.",
-    img_width: 300,
-    img_height: 200,
+    img_width: "300",
+    img_height: "200",
     router_name: "bots",
   },
   {
     title: "Execuções",
     text: "Listagem de suas execuções realizadas com os robôs.",
-    img_width: 300,
-    img_height: 200,
+    img_width: "300",
+    img_height: "200",
   },
   {
     title: "Agendamentos",
     text: "Lista de execuções agendadas para os robôs.",
-    img_width: 300,
-    img_height: 200,
+    img_width: "300",
+    img_height: "200",
   },
 ];
 </script>
 
 <template>
-  <main class="d-flex justify-content-center align-items-center overflow-y-auto overflow-x-hidden">
-    <div class="d-flex gap-4 p-3 flex-wrap justify-content-center mt-5" id="dashContent">
-      <CardsView
-        v-for="(card, index) in cards"
-        :key="index"
-        :title="card.title"
-        :text="card.text"
-        :img_width="card.img_width"
-        :img_height="card.img_height"
-        :router_name="card.router_name"
-      />
-    </div>
-  </main>
+  <div class="d-flex gap-4 p-3 flex-wrap justify-content-center mt-5" id="dashContent">
+    <CardsView
+      v-for="(card, index) in cards"
+      :key="index"
+      :title="card.title"
+      :text="card.text"
+      :img_width="card.img_width"
+      :img_height="card.img_height"
+      :router_name="card.router_name"
+    />
+  </div>
 </template>
 <style scoped lang="scss">
 @import "../../assets/scss/default.scss";

@@ -36,12 +36,12 @@ const props = defineProps({
     default: "dashboard",
   },
   img_width: {
-    type: Number,
-    default: 100,
+    type: String,
+    default: "100",
   },
   img_height: {
-    type: Number,
-    default: 100,
+    type: String,
+    default: "100",
   },
 });
 

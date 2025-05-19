@@ -13,6 +13,7 @@ declare module 'vue' {
     BCardText: typeof import('bootstrap-vue-next/components/BCard')['BCardText']
     CardsView: typeof import('./src/components/CardsView.vue')['default']
     ChoseThemeView: typeof import('./src/components/ChoseThemeView.vue')['default']
+    MainFrame: typeof import('./src/components/MainFrame.vue')['default']
     NavbarView: typeof import('./src/components/NavbarView.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

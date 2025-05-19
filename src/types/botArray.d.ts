@@ -8,6 +8,9 @@ interface botRecord {
   form_cfg: string;
   classification: string;
   text: string;
+  img_src?: string;
+  img_width?: string;
+  img_height?: string;
 }
 
 export type { botRecord };
