@@ -19,10 +19,10 @@ if (!isDev) {
 
 export const modeLoadWindow: LoadWindow = {
   true: async (mainWindow: BrowserWindow) => {
-    await mainWindow.loadURL("http://localhost:5173");
+    mainWindow.loadURL("http://localhost:5173");
   },
   false: async (mainWindow: BrowserWindow) => {
-    await mainWindow.loadFile(join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
+    mainWindow.loadFile(join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   },
 };
 

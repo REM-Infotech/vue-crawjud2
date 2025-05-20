@@ -7,6 +7,7 @@ import { createApp } from "vue";
 
 import "./assets/scripts/color-modes";
 import "./assets/scss/main.css";
+const url_socket = import.meta.env.VITE_SOCKET_URL + "/logs";
 
 import App from "./App.vue";
 import { router } from "./router";
@@ -16,8 +17,14 @@ export const pinia = createPinia();
 app.use(bootstrap); // Important
 app.use(pinia);
 app.use(router);
-
+export const io = sio(url_socket, {
+  transports: ["websocket"],
+});
 app.mount("#app");
+io.on("connect", () => {
+  console.log("connected!");
+});
 
-const url_socket = import.meta.env.VITE_SOCKET_URL + "/logs";
-export const io = sio(url_socket);
+io.on("push_route", (data: Record<string, string>) => {
+  router.push({ name: "logs_execution", params: { pid: data["pid"] } });
+});

@@ -1,9 +1,9 @@
-import { app, dialog, ipcMain, MenuItem } from "electron";
+import { app, BrowserWindow, dialog, ipcMain, MenuItem } from "electron";
 import sio from "socket.io-client";
 import { url_socket } from "../addons/socketio";
 import { MenuApp } from "../components/systemTray";
 import { icon } from "../configs";
-import { mainWindow } from "../windows/mainWindow";
+import { createWindow, mainWindow } from "../windows/mainWindow";
 /** Returns the main BrowserWindow instance */
 const systemTray = true;
 
@@ -27,14 +27,13 @@ ipcMain.on("add_execution", async (_, pid: string) => {
       id: index,
       label: pid,
       type: "normal",
-      click: () => {
+      click: async (menuItem) => {
+        if (BrowserWindow.getAllWindows().length === 0) await createWindow();
+        const pid = menuItem.label;
         const io = sio(url_socket, {
           transports: ["websocket"],
-          extraHeaders: {},
-          query: {
-            pid: pid,
-          },
         });
+        io.emit("join_room", { pid: pid });
         io.emit("push_route", { pid: pid });
       },
       sublabel: "",
