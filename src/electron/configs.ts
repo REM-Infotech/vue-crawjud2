@@ -1,8 +1,8 @@
-import type { LoadWindow, TtitleBarStyle } from "./types/service";
 import type { BrowserWindow } from "electron";
 import { app } from "electron";
 import isDev from "electron-is-dev";
 import { join } from "path";
+import type { LoadWindow, TtitleBarStyle } from "../types/service";
 export let icon: string;
 
 if (!isDev) {
