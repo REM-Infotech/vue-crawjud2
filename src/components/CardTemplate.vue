@@ -66,7 +66,7 @@ function pushRouter(id: string, system: string, type: string, display_name: stri
 </script>
 
 <template>
-  <div class="card" style="max-width: 20rem; max-height: 65vh">
+  <div class="card" style="max-width: 20rem; max-height: 35rem">
     <div class="card-header">
       <h5 class="text-center">
         {{ props.title }}
@@ -77,7 +77,7 @@ function pushRouter(id: string, system: string, type: string, display_name: stri
       :alt="props.img_alt"
       :width="props.img_width"
       :heigth="props.img_height"
-      class="card-img-top rounded-1 p-1 bg-dark"
+      class="rounded-1 p-1 bg-dark"
     />
     <div class="card-body">
       <div class="text-center mt-3 bg-secondary bg-opacity-25 p-3 rounded-4">
