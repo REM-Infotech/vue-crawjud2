@@ -24,6 +24,7 @@ let params: botRecord;
 
 const status = ref(false);
 const selected = ref(null);
+const selected2 = ref(null);
 const nextPage = ref(false);
 const disabledStatus = computed({
   get: () => !status.value,
@@ -168,7 +169,7 @@ async function handleSubmit(event: Event) {
                     <BCardBody class="overflow-auto responsive_options_selector">
                       <div class="d-grid gap-5">
                         <BFormSelect v-model="selected" :options="ex1Options" size="lg" />
-                        <BFormSelect v-model="selected" :options="ex2Options" size="lg" />
+                        <BFormSelect v-model="selected2" :options="ex2Options" size="lg" />
                         <BFormCheckbox id="checkbox-1" v-model="status" name="checkbox-1">
                           Confirmo que os dados enviados estão corretos.
                         </BFormCheckbox>
