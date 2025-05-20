@@ -28,6 +28,13 @@ const createWindow = async () => {
     },
   });
 
+  // const view = new WebContentsView();
+  // mainWindow.contentView.addChildView(view);
+  // view.setBounds({ x: 0, y: 0, width: 300, height: 300 });
+  // view.webContents.loadURL("https://crawjud.robotz.dev");
+
+  // mainWindow.contentView.removeChildView(view);
+
   await modeLoadWindow[isDev ? "true" : "false"](mainWindow);
   await import("./components");
 };

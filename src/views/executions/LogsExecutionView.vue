@@ -1,21 +1,30 @@
 <script setup lang="ts">
-import { socket } from "@/addons/socketio";
 import storeLogs from "@/stores/storeLogs";
 import { faPieChart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { watch } from "vue";
+import sio from "socket.io-client";
+import { onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
+const url_socket = import.meta.env.VITE_SOCKET_URL + "/logs";
 const route = useRoute();
 const store = storeLogs();
-socket.connect();
-
-socket.on("connection", (io) => {
-  io.join(route.params.pid);
+const io = sio(url_socket, {
+  transports: ["websocket"],
+  extraHeaders: {},
+  query: {
+    pid: route.params.pid as string,
+  },
 });
 
-socket.on("log_execution", (data) => {
+io.connect();
+
+io.on("log_execution", (data) => {
   const randomId = `id_${Math.random().toString(36).substring(2, 9)}`;
   store.logRef.push({ message: data.message, id: randomId });
+});
+
+onMounted(() => {
+  store.pid = route.params.pid as string;
 });
 
 watch(store.logRef, (newValue) => {

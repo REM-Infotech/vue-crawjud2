@@ -5,6 +5,7 @@ import { ref } from "vue";
 export default defineStore("storeLog", () => {
   const logRef = ref<LogData[]>([]);
   const currentItem = ref<LogData>(null);
+  const pid = ref("");
   function addLog(new_Log: LogData) {
     logRef.value.push(new_Log);
   }
@@ -18,5 +19,5 @@ export default defineStore("storeLog", () => {
     logRef.value = [];
   }
 
-  return { logRef, addLog, catchNewValue, reset, currentItem };
+  return { logRef, addLog, catchNewValue, reset, currentItem, pid };
 });
