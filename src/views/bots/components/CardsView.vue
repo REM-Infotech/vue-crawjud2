@@ -39,11 +39,11 @@ const props = defineProps({
   },
   img_width: {
     type: String,
-    default: "100",
+    default: "300px",
   },
   img_height: {
     type: String,
-    default: "100",
+    default: "300px",
   },
   other_args: {
     type: Object as () => botRecord,
@@ -75,8 +75,6 @@ function pushRouter(id: string, system: string, type: string, display_name: stri
     <img
       :src="loadImage(props.img_src)"
       :alt="props.img_alt"
-      :width="props.img_width"
-      :heigth="props.img_height"
       class="card-img-top rounded-1 p-1 bg-dark"
     />
     <div class="card-body">

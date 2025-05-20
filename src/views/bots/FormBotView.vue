@@ -166,6 +166,7 @@ async function handleSubmit(event: Event) {
                   variant="outline-success"
                   size="lg"
                   @click="nextPage = !nextPage"
+                  :disabled="files.length === 0"
                 >
                   Próxima Página
                 </BButton>
@@ -221,7 +222,7 @@ async function handleSubmit(event: Event) {
 }
 
 .responsive_dropzone {
-  height: 65vh;
+  height: 67vh;
 
   @media (max-height: 768px) {
     max-height: 47vh;
