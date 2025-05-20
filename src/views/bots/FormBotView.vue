@@ -4,7 +4,7 @@ import { botRecord } from "@/types/botArray";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { BContainer } from "bootstrap-vue-next";
-import { computed, onBeforeMount, onUnmounted, ref } from "vue";
+import { onBeforeMount, onUnmounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import DropZone from "./components/FileDropZone.vue";
 import ListFiles from "./components/ListFiles.vue";
@@ -18,25 +18,16 @@ const {
   removeSelectedFiles,
   updateSelection,
   toggleSelectAll,
+  nextPage,
+  selected,
+  selected2,
+  variant,
+  variantComputed,
+  status,
+  disabledStatus,
   addfiles_,
 } = FormSetup();
 let params: botRecord;
-
-const status = ref(false);
-const selected = ref(null);
-const selected2 = ref(null);
-const nextPage = ref(false);
-const disabledStatus = computed({
-  get: () => !status.value,
-  set: (val: boolean) => {
-    status.value = !!val;
-    console.log(status.value);
-  },
-});
-
-const variantComputed = computed(() => {
-  return disabledStatus.value ? "outline-secondary" : "success";
-});
 
 const router = useRouter();
 onBeforeMount(() => {
@@ -47,24 +38,12 @@ type OptionType = { value: string | null; text: string; disabled?: boolean };
 
 const ex1Options: OptionType[] = [
   { value: null, text: "Selecione uma Credencial", disabled: true },
-  { value: "a", text: "This is First option" },
-  { value: "b", text: "Selected Option" },
-  { value: "d", text: "This one is disabled" },
 ];
 
-const ex2Options: OptionType[] = [
-  { value: null, text: "Selecione o Estado", disabled: true },
-  { value: "a", text: "This is First option" },
-  { value: "b", text: "Selected Option" },
-  { value: "d", text: "This one is disabled" },
-];
+const ex2Options: OptionType[] = [{ value: null, text: "Selecione o Estado", disabled: true }];
 
 onUnmounted(() => {
   nextPage.value = false;
-});
-
-const variant = computed(() => {
-  return allSelected.value ? "outline-warning" : "outline-primary";
 });
 
 async function handleSubmit(event: Event) {

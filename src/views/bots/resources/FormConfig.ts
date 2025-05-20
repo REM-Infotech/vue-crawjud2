@@ -1,4 +1,4 @@
-import type { TFormBot, TUploadableFile } from "@/types/FormBot";
+import type { TUploadableFile } from "@/types/FormBot";
 import { computed, reactive, ref, type Ref } from "vue";
 
 const xlsx_file = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -25,7 +25,7 @@ export default function () {
   const allSelected = computed(
     () => files.value.length > 0 && selectedFiles.value.length === files.value.length,
   );
-  const FormBot = reactive<TFormBot>({
+  const FormBot = reactive({
     files: [],
   });
   const files = ref<TUploadableFile[]>([]);
@@ -88,7 +88,34 @@ export default function () {
     selectedFiles.value = [];
   }
 
+  const status = ref(false);
+  const selected = ref(null);
+  const selected2 = ref(null);
+  const nextPage = ref(false);
+  const disabledStatus = computed({
+    get: () => !status.value,
+    set: (val: boolean) => {
+      status.value = !!val;
+      console.log(status.value);
+    },
+  });
+
+  const variantComputed = computed(() => {
+    return disabledStatus.value ? "outline-secondary" : "success";
+  });
+
+  const variant = computed(() => {
+    return allSelected.value ? "outline-warning" : "outline-primary";
+  });
+
   return {
+    status,
+    selected,
+    selected2,
+    nextPage,
+    disabledStatus,
+    variant,
+    variantComputed,
     addFiles,
     removeSelectedFiles,
     addfiles_,
