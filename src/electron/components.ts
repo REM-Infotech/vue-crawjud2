@@ -1,7 +1,6 @@
-import { MainWindow } from "./ipc";
 import { app, dialog, Menu, Notification, Tray } from "electron";
-import { join } from "path";
 import { icon } from "./configs";
+import { MainWindow } from "./ipc";
 
 export const NotificationSuccess = new Notification({
   title: "Sucesso!",
@@ -10,7 +9,7 @@ export const NotificationSuccess = new Notification({
 
 export const IconTray = new Tray(icon);
 
-const MenuApp = Menu.buildFromTemplate([
+export const MenuApp = Menu.buildFromTemplate([
   {
     label: "Sair",
     async click() {
@@ -23,7 +22,7 @@ const MenuApp = Menu.buildFromTemplate([
         cancelId: 1,
         title: "Sair",
         noLink: true,
-        icon: join(process.cwd(), "src", "renderer", "assets", "img", "icon.png"),
+        icon: icon,
       });
 
       if (mensagem_sair.response === 0) {

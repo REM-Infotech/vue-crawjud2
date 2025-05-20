@@ -1,5 +1,5 @@
-import { app, ipcMain, BrowserWindow } from "electron";
-
+import { app, BrowserWindow, dialog, ipcMain } from "electron";
+import { icon } from "../configs";
 /** Returns the main BrowserWindow instance */
 const GetmainWindow = async (): Promise<BrowserWindow> => {
   const { mainWindow } = await import("../main");
@@ -21,5 +21,20 @@ ipcMain.on("maximize", async () => {
 });
 
 ipcMain.on("close", async () => {
-  app.quit();
+  const { mainWindow } = await import("../main");
+
+  const mensagem_sair = await dialog.showMessageBox(mainWindow, {
+    type: "question",
+    message: "Deseja realmente sair?",
+    buttons: ["Sim", "Não"],
+    defaultId: 1,
+    cancelId: 1,
+    title: "Sair",
+    noLink: true,
+    icon: icon,
+  });
+
+  if (mensagem_sair.response === 0) {
+    app.quit();
+  }
 });
