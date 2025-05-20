@@ -66,7 +66,7 @@ function pushRouter(id: string, system: string, type: string, display_name: stri
 </script>
 
 <template>
-  <div class="card" style="max-width: 20rem; max-height: 65vh">
+  <div class="card" style="max-width: 20rem; max-height: 100vh">
     <div class="card-header">
       <h5 class="text-center">
         {{ props.title }}

@@ -1,27 +1,25 @@
 <script setup lang="ts">
-import CardsView from "./components/CardsView.vue";
 import botsList from "@/assets/json/bots_list.json";
 import { botRecord } from "@/types/botArray";
+import CardsView from "./components/CardsView.vue";
 const cards: botRecord[] = botsList;
 </script>
 
 <template>
-  <div class="vh-50">
-    <MainFrame>
-      <div class="d-flex gap-4 p-3 flex-wrap justify-content-center mt-5" id="dashContent">
-        <CardsView
-          v-for="(card, index) in cards"
-          :key="index"
-          :title="card.display_name"
-          :text="card.text"
-          :img_src="card.img_src"
-          :img_width="card.img_width"
-          :img_height="card.img_height"
-          :other_args="card"
-        />
-      </div>
-    </MainFrame>
-  </div>
+  <MainFrame>
+    <div class="d-flex gap-4 p-3 flex-wrap justify-content-center mt-5" id="dashContent">
+      <CardsView
+        v-for="(card, index) in cards"
+        :key="index"
+        :title="card.display_name"
+        :text="card.text"
+        :img_src="card.img_src"
+        :img_width="card.img_width"
+        :img_height="card.img_height"
+        :other_args="card"
+      />
+    </div>
+  </MainFrame>
 </template>
 <style scoped lang="scss">
 @import "../../assets/scss/default.scss";

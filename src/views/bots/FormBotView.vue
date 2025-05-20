@@ -22,21 +22,41 @@ const {
 } = FormSetup();
 let params: botRecord;
 
+const status = ref(false);
+const selected = ref(null);
 const nextPage = ref(false);
+const disabledStatus = computed({
+  get: () => !status.value,
+  set: (val: boolean) => {
+    status.value = !!val;
+    console.log(status.value);
+  },
+});
+
+const variantComputed = computed(() => {
+  return disabledStatus.value ? "outline-secondary" : "success";
+});
+
 const router = useRouter();
 onBeforeMount(() => {
   params = route.params as unknown as botRecord;
 });
 
-const ex1Options = [
-  { value: null, text: "Please select an option" },
+type OptionType = { value: string | null; text: string; disabled?: boolean };
+
+const ex1Options: OptionType[] = [
+  { value: null, text: "Selecione uma Credencial", disabled: true },
   { value: "a", text: "This is First option" },
   { value: "b", text: "Selected Option" },
-  { value: { C: "3PO" }, text: "This is an option with object value" },
-  { value: "d", text: "This one is disabled", disabled: true },
+  { value: "d", text: "This one is disabled" },
 ];
 
-const selected = ref(null);
+const ex2Options: OptionType[] = [
+  { value: null, text: "Selecione o Estado", disabled: true },
+  { value: "a", text: "This is First option" },
+  { value: "b", text: "Selected Option" },
+  { value: "d", text: "This one is disabled" },
+];
 
 onUnmounted(() => {
   nextPage.value = false;
@@ -148,8 +168,10 @@ async function handleSubmit(event: Event) {
                     <BCardBody class="overflow-auto responsive_options_selector">
                       <div class="d-grid gap-5">
                         <BFormSelect v-model="selected" :options="ex1Options" size="lg" />
-                        <BFormSelect v-model="selected" :options="ex1Options" size="lg" />
-                        <BFormSelect v-model="selected" :options="ex1Options" size="lg" />
+                        <BFormSelect v-model="selected" :options="ex2Options" size="lg" />
+                        <BFormCheckbox id="checkbox-1" v-model="status" name="checkbox-1">
+                          Confirmo que os dados enviados estão corretos.
+                        </BFormCheckbox>
                       </div>
                     </BCardBody>
                   </BCard>
@@ -168,13 +190,14 @@ async function handleSubmit(event: Event) {
                   @click="nextPage = !nextPage"
                   :disabled="files.length === 0"
                 >
-                  Próxima Página
+                  <span class="fw-semibold"> Próxima Página </span>
                 </BButton>
                 <BButton
                   v-else-if="nextPage"
-                  variant="outline-success"
+                  :variant="variantComputed"
                   class="rounded-2"
                   type="submit"
+                  v-model:disabled="disabledStatus"
                 >
                   <span class="fw-semibold"> Inicializar Execução </span>
                 </BButton>
