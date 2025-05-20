@@ -3,17 +3,30 @@ import { socket } from "@/addons/socketio";
 import storeLogs from "@/stores/storeLogs";
 import { faPieChart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { watch } from "vue";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const store = storeLogs();
+socket.connect();
 
 socket.on("connection", (io) => {
   io.join(route.params.pid);
 });
 
 socket.on("log_execution", (data) => {
-  console.log(data);
-  store.logRef.push(data);
+  const randomId = `id_${Math.random().toString(36).substring(2, 9)}`;
+  store.logRef.push({ message: data.message, id: randomId });
+});
+
+watch(store.logRef, (newValue) => {
+  const data = store.catchNewValue();
+  store.currentItem = data;
+  setTimeout(() => {
+    const element = document.querySelector(`li[id="${data.id}"]`);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+  }, 500);
 });
 </script>
 
@@ -30,8 +43,8 @@ socket.on("log_execution", (data) => {
             <span class="fw-semibold">Execução ID: {{ route.params.pid }} </span>
           </div>
         </div>
-        <div class="card-body row">
-          <div class="col-md-6">
+        <div class="card-body row gap-0">
+          <div class="col-lg-6">
             <div class="card">
               <div class="card-header">
                 <div class="card-title">
@@ -42,16 +55,21 @@ socket.on("log_execution", (data) => {
                   <span class="fw-semibold">Logs {{ route.params.pid }} </span>
                 </div>
               </div>
-              <div class="card-body bg-black rounded-bottom" style="height: 65vh">
+              <div class="card-body bg-black rounded-bottom overflow-y-scroll" style="height: 65vh">
                 <TransitionGroup name="list" tag="ul">
-                  <li v-for="item in store.logRef" :key="item">
-                    {{ item }}
+                  <li
+                    v-for="(item, index) in store.logRef"
+                    :key="index"
+                    class="text-white"
+                    :id="item.id"
+                  >
+                    {{ item.message }}
                   </li>
                 </TransitionGroup>
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-lg-6">
             <div class="card">
               <div class="card-header">
                 <div class="card-title">

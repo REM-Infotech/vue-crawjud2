@@ -1,11 +1,22 @@
+import type { LogData } from "@/types/logsbot";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export default defineStore("storeLog", () => {
-  const logRef = ref<Array<string>>([]);
-  function addLog(new_Log: string) {
+  const logRef = ref<LogData[]>([]);
+  const currentItem = ref<LogData>(null);
+  function addLog(new_Log: LogData) {
     logRef.value.push(new_Log);
   }
 
-  return { logRef, addLog };
+  function catchNewValue(): LogData {
+    const index = logRef.value.length - 1;
+    return logRef.value[index];
+  }
+
+  function reset() {
+    logRef.value = [];
+  }
+
+  return { logRef, addLog, catchNewValue, reset, currentItem };
 });

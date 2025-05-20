@@ -48,7 +48,7 @@ onUnmounted(() => {
 
 async function handleSubmit(event: Event) {
   event.preventDefault();
-  router.push({ name: "logs_execution", params: { pid: "A1B2C3" } });
+  router.push({ name: "logs_execution", params: { pid: "Q9M1E6" } });
 }
 </script>
 
