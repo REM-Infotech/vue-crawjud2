@@ -18,7 +18,12 @@ const io = sio(url_socket, {
 
 io.connect();
 
+io.on("connection", async (socket) => {
+  console.log(socket);
+});
+
 io.on("log_execution", (data) => {
+  this;
   const randomId = `id_${Math.random().toString(36).substring(2, 9)}`;
   store.logRef.push({ message: data.message, id: randomId });
 });

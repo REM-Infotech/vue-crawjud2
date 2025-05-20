@@ -31,4 +31,5 @@ export const MenuApp = Menu.buildFromTemplate([
     },
   },
 ]);
+
 IconTray.setContextMenu(MenuApp);
