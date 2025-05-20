@@ -31,10 +31,7 @@ const route = useRoute();
                   <span class="fw-semibold">Logs {{ route.params.pid }} </span>
                 </div>
               </div>
-              <div
-                class="card-body bg-black rounded-bottom bg-opacity-75"
-                style="height: 65vh"
-              ></div>
+              <div class="card-body bg-black rounded-bottom" style="height: 65vh"></div>
             </div>
           </div>
           <div class="col-md-6">
@@ -48,10 +45,7 @@ const route = useRoute();
                   <span class="fw-semibold"> Gráficos {{ route.params.pid }} </span>
                 </div>
               </div>
-              <div
-                class="card-body bg-black rounded-bottom bg-opacity-75"
-                style="height: 65vh"
-              ></div>
+              <div class="card-body rounded-bottom bg-opacity-75" style="height: 65vh"></div>
             </div>
           </div>
         </div>
