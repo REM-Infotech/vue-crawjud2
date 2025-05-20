@@ -49,6 +49,7 @@ onUnmounted(() => {
 async function handleSubmit(event: Event) {
   event.preventDefault();
   router.push({ name: "logs_execution", params: { pid: "Q9M1E6" } });
+  window.electronAPI.add_execution("Q9M1E6");
 }
 </script>
 

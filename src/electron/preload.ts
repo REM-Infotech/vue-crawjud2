@@ -17,6 +17,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   minimize: () => ipcRenderer.send("minimize"),
   maximize: () => ipcRenderer.send("maximize"),
   close: () => ipcRenderer.send("close"),
+  add_execution: (pid: string) => ipcRenderer.send("add_execution", pid),
 });
 
 contextBridge.exposeInMainWorld("ThemeChoser", {

@@ -2,6 +2,7 @@ import { createBootstrap } from "bootstrap-vue-next";
 import "bootstrap-vue-next/dist/bootstrap-vue-next.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { createPinia } from "pinia";
+import sio from "socket.io-client";
 import { createApp } from "vue";
 
 import "./assets/scripts/color-modes";
@@ -17,3 +18,6 @@ app.use(pinia);
 app.use(router);
 
 app.mount("#app");
+
+const url_socket = import.meta.env.VITE_SOCKET_URL + "/logs";
+export const io = sio(url_socket);

@@ -1,22 +1,12 @@
 <script setup lang="ts">
+import { io } from "@/renderer";
 import storeLogs from "@/stores/storeLogs";
 import { faPieChart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import sio from "socket.io-client";
 import { onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
-const url_socket = import.meta.env.VITE_SOCKET_URL + "/logs";
 const route = useRoute();
 const store = storeLogs();
-const io = sio(url_socket, {
-  transports: ["websocket"],
-  extraHeaders: {},
-  query: {
-    pid: route.params.pid as string,
-  },
-});
-
-io.connect();
 
 io.on("connection", async (socket) => {
   console.log(socket);
@@ -30,6 +20,7 @@ io.on("log_execution", (data) => {
 
 onMounted(() => {
   store.pid = route.params.pid as string;
+  io.emit("join_room", { pid: route.params.pid as string });
 });
 
 watch(store.logRef, (newValue) => {

@@ -22,6 +22,7 @@ interface Window {
     getAllCredentials: () => Promise<Array<{ account: string; password: string }>>;
     getCredentials: () => Promise<Array<{ account: string; password: string }>>;
     AlertError: () => Promise<void>;
+    add_execution: (pid: str) => Promise<void>;
   };
 
   ThemeChoser: {

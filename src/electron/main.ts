@@ -1,48 +1,27 @@
 import { initialize } from "@electron/remote/main/index";
 import { app, BrowserWindow, Tray } from "electron";
-import isDev from "electron-is-dev";
-import { join } from "path";
-import { icon, modeLoadWindow, titleBarStyle } from "./configs";
+
+import { MenuApp } from "./components/systemTray";
+import { icon } from "./configs";
 import "./ipc/ThemeBehavior";
 import "./ipc/WinBehavior";
+import { createWindow } from "./windows/mainWindow";
 
 export let traywindow: Tray;
-export let mainWindow: BrowserWindow;
+initialize();
+
+const systemTray = true;
 
 app.setAppUserModelId("com.app.RemDevs.CrawJUD");
 
-const createWindow = async () => {
-  initialize();
-
-  mainWindow = new BrowserWindow({
-    icon: icon,
-    minWidth: 1280,
-    minHeight: 720,
-    width: 1280,
-    height: 720,
-    titleBarStyle: titleBarStyle(),
-    webPreferences: {
-      contextIsolation: true,
-      nodeIntegration: true,
-      preload: join(__dirname, "./preload.js"),
-    },
-  });
-
-  // const view = new WebContentsView();
-  // mainWindow.contentView.addChildView(view);
-  // view.setBounds({ x: 0, y: 0, width: 300, height: 300 });
-  // view.webContents.loadURL("https://crawjud.robotz.dev");
-
-  // mainWindow.contentView.removeChildView(view);
-
-  await modeLoadWindow[isDev ? "true" : "false"](mainWindow);
-  await import("./components");
-};
-
-app.whenReady().then(createWindow);
+app.whenReady().then(async () => {
+  createWindow();
+  const IconTray = new Tray(icon);
+  IconTray.setContextMenu(MenuApp);
+});
 
 app.on("window-all-closed", async () => {
-  if (process.platform !== "darwin") {
+  if (process.platform !== "darwin" && !systemTray) {
     app.quit();
   }
 });
