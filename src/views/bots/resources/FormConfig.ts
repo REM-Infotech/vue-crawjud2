@@ -22,6 +22,14 @@ class FileCollection {
     this.files = files;
   }
 
+  /**
+   * Adds unique files from the current instance's `files` array to the provided `targetFilesRef`.
+   * A file is considered unique if it does not already exist in `targetFilesRef` by name or type.
+   * Returns an array of the newly added `TUploadableFile` instances.
+   *
+   * @param targetFilesRef - A Vue ref containing the current list of uploadable files.
+   * @returns An array of `TUploadableFile` objects that were newly added.
+   */
   addUniqueFiles({
     targetFilesRef,
   }: {
