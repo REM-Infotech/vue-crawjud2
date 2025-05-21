@@ -26,7 +26,7 @@ const {
   variantComputed,
   status,
   disabledStatus,
-  addfiles_,
+  addFiles,
 } = FormSetup();
 let params: botRecord;
 
@@ -75,7 +75,7 @@ window.addEventListener("resize", handleResize);
         <div class="card-header">
           <h5 class="text-center">{{ params.display_name }}</h5>
         </div>
-        <div class="card-body overflow-y-auto" style="max-height: 76vh; min-height: 76vh">
+        <div class="card-body overflow-y-auto" style="max-height: 76vh">
           <CardContent>
             <Transition name="fade" mode="out-in">
               <div v-if="!nextPage" class="row justify-content-between">
@@ -84,7 +84,7 @@ window.addEventListener("resize", handleResize);
                 >
                   <DropZone
                     v-model="FormBot.files"
-                    @files-dropped="addfiles_"
+                    @files-dropped="addFiles"
                     #default="{ dropZoneActive }"
                     class="rounded-2 flex-grow-1 d-flex flex-column justify-content-center align-items-center"
                   >
