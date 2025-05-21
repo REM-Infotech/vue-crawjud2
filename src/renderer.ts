@@ -26,5 +26,5 @@ io.on("connect", () => {
 });
 
 io.on("push_route", (data: Record<string, string>) => {
-  router.push({ name: "logs_execution", params: { pid: data["pid"] } });
+  router.push({ name: "logs_execution", params: { pid: data.pid } });
 });
