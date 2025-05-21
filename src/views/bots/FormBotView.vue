@@ -163,6 +163,16 @@ async function handleSubmit(event: Event) {
             <div class="d-flex gap-2 justify-content-end">
               <Transition name="fade" mode="out-in">
                 <BButton
+                  v-if="nextPage"
+                  variant="outline-primary"
+                  class="rounded-2"
+                  @click="nextPage = !nextPage"
+                >
+                  <span class="fw-semibold"> Voltar </span>
+                </BButton>
+              </Transition>
+              <Transition name="fade" mode="out-in">
+                <BButton
                   v-if="!nextPage"
                   class="rounded-2"
                   variant="outline-success"
@@ -172,6 +182,7 @@ async function handleSubmit(event: Event) {
                 >
                   <span class="fw-semibold"> Próxima Página </span>
                 </BButton>
+
                 <BButton
                   v-else-if="nextPage"
                   :variant="variantComputed"
