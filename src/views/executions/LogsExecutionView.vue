@@ -13,9 +13,9 @@ io.on("connection", async (socket) => {
 });
 
 io.on("log_execution", (data) => {
-  this;
   const randomId = `id_${Math.random().toString(36).substring(2, 9)}`;
-  store.logRef.push({ message: data.message, id: randomId });
+
+  store.logRef.push({ message: data.message, id: randomId, type: data.type });
 });
 
 onMounted(() => {
@@ -29,7 +29,7 @@ watch(store.logRef, (newValue) => {
   setTimeout(() => {
     const element = document.querySelector(`li[id="${data.id}"]`);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "end" });
+      element.scrollIntoView({ block: "end" });
     }
   }, 500);
 });
@@ -60,12 +60,19 @@ watch(store.logRef, (newValue) => {
                   <span class="fw-semibold">Logs {{ route.params.pid }} </span>
                 </div>
               </div>
-              <div class="card-body bg-black rounded-bottom overflow-y-scroll" style="height: 65vh">
+              <div
+                class="card-body bg-black rounded-bottom overflow-y-scroll overflow-x-hidden"
+                style="height: 65vh"
+              >
                 <TransitionGroup name="list" tag="ul">
                   <li
                     v-for="(item, index) in store.logRef"
                     :key="index"
-                    class="text-white"
+                    :class="{
+                      'text-white fw-bold': item.type === 'log',
+                      'text-success fw-bold': item.type === 'success',
+                      'text-danger fw-bold': item.type === 'error',
+                    }"
                     :id="item.id"
                   >
                     {{ item.message }}
@@ -114,7 +121,7 @@ watch(store.logRef, (newValue) => {
 
 .list-enter-active,
 .list-leave-active {
-  transition: all 0.5s ease;
+  transition: all 2.5s ease;
 }
 .list-enter-from,
 .list-leave-to {
