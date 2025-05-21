@@ -29,7 +29,7 @@ watch(store.logRef, (newValue) => {
   setTimeout(() => {
     const element = document.querySelector(`li[id="${data.id}"]`);
     if (element) {
-      element.scrollIntoView({ block: "end" });
+      element.scrollIntoView();
     }
   }, 500);
 });
