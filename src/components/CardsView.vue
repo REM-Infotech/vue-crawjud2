@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import projudiImg from "@/assets/svg/projudi.svg";
 import elawImg from "@/assets/svg/elaw.svg";
 import esaj from "@/assets/svg/esaj.svg";
+import projudiImg from "@/assets/svg/projudi.svg";
+import botimg from "@/assets/svg/robot-icon.svg";
 
 const images = {
   elaw: elawImg,
@@ -47,7 +48,7 @@ const props = defineProps({
 
 function loadImage(img: string): string {
   if (img.includes("https") || img.includes("http")) {
-    return img;
+    return botimg;
   } else {
     return images[img as keyof typeof images];
   }

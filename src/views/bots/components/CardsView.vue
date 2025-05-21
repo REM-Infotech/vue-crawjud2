@@ -2,9 +2,9 @@
 import elawImg from "@/assets/svg/elaw.svg";
 import esaj from "@/assets/svg/esaj.svg";
 import projudiImg from "@/assets/svg/projudi.svg";
+import botimg from "@/assets/svg/robot-icon.svg";
 import { botRecord } from "@/types/botArray";
 import { useRouter } from "vue-router";
-
 const images = {
   elaw: elawImg,
   projudi: projudiImg,
@@ -52,9 +52,10 @@ const props = defineProps({
 });
 
 const router = useRouter();
+
 function loadImage(img: string): string {
   if (img.includes("https") || img.includes("http")) {
-    return img;
+    return botimg;
   } else {
     return images[img as keyof typeof images];
   }
