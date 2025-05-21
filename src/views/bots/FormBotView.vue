@@ -55,18 +55,17 @@ async function handleSubmit(event: Event) {
 
 <template>
   <MainFrame>
-    <BContainer :fluid="!nextPage" class="mt-4">
+    <BContainer fluid class="mt-4">
       <BForm @submit="handleSubmit">
-        <BCard img-top>
-          <template #header>
+        <div class="card">
+          <div class="card-header">
             <h5 class="text-center">{{ params.display_name }}</h5>
-          </template>
-          <BCardBody>
+          </div>
+          <div class="card-body">
             <Transition name="fade" mode="out-in">
-              <BRow v-if="!nextPage" class="justify-content-center">
-                <BCol
-                  md="3"
-                  class="d-flex flex-column dropzone_background responsive_dropzone rounded-2 m-3 p-2"
+              <div v-if="!nextPage" class="row justify-content-between">
+                <div
+                  class="col-4 d-flex flex-column dropzone_background responsive_dropzone rounded-2 p-2"
                 >
                   <DropZone
                     v-model="FormBot.files"
@@ -91,8 +90,8 @@ async function handleSubmit(event: Event) {
                       </div>
                     </Transition>
                   </DropZone>
-                </BCol>
-                <BCol md="8" class="d-flex flex-column table_background rounded-2 m-3 p-2">
+                </div>
+                <div class="col-8 d-flex flex-column table_background rounded-2 p-2">
                   <BCard>
                     <template #header>
                       <div class="d-flex">
@@ -138,10 +137,10 @@ async function handleSubmit(event: Event) {
                       </div>
                     </template>
                   </BCard>
-                </BCol>
-              </BRow>
+                </div>
+              </div>
               <BRow v-else-if="nextPage" class="justify-content-center">
-                <BCol md="8" class="d-flex flex-column table_background rounded-2 m-3 p-2">
+                <BCol md="8" class="d-flex flex-column rounded-2 p-3">
                   <BCard>
                     <template #header>
                       <span class="fw-bold">Informações complementares</span>
@@ -159,8 +158,8 @@ async function handleSubmit(event: Event) {
                 </BCol>
               </BRow>
             </Transition>
-          </BCardBody>
-          <template #footer>
+          </div>
+          <div class="card-footer">
             <div class="d-flex gap-2 justify-content-end">
               <Transition name="fade" mode="out-in">
                 <BButton
@@ -184,8 +183,8 @@ async function handleSubmit(event: Event) {
                 </BButton>
               </Transition>
             </div>
-          </template>
-        </BCard>
+          </div>
+        </div>
       </BForm>
     </BContainer>
   </MainFrame>
@@ -215,38 +214,14 @@ async function handleSubmit(event: Event) {
 
 .responsive_options_selector {
   height: 55vh;
-
-  @media (max-height: 768px) {
-    max-height: 37vh;
-  }
-
-  @media (max-height: 576px) {
-    max-height: 22vh;
-  }
 }
 
 .responsive_dropzone {
   height: 67vh;
-
-  @media (max-height: 768px) {
-    max-height: 47vh;
-  }
-
-  @media (max-height: 576px) {
-    max-height: 22vh;
-  }
 }
 
 .responsive_row {
-  height: 48vh;
-
-  @media (max-height: 768px) {
-    max-height: 18vh;
-  }
-
-  @media (max-height: 576px) {
-    max-height: 18vh;
-  }
+  height: 41vh;
 }
 
 [data-bs-theme="dark"] {
