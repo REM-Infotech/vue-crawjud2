@@ -59,8 +59,8 @@ const handleResize = () => {
   minSize.value = window.innerHeight - 500;
 };
 
-const filesContentProps = { minSize: Number, maxSize: Number };
-const FilesContent = styled("div", filesContentProps)`
+const CardContentProps = { minSize: Number, maxSize: Number };
+const CardContent = styled("div", CardContentProps)`
   max-height: ${(props) => props.maxSize}px;
   min-height: ${(props) => props.minSize}px;
 `;
@@ -69,17 +69,17 @@ window.addEventListener("resize", handleResize);
 </script>
 
 <template>
-  <MainFrame>
-    <BContainer fluid class="mt-4">
-      <BForm @submit="handleSubmit">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="text-center">{{ params.display_name }}</h5>
-          </div>
-          <div class="card-body">
+  <BContainer fluid class="mt-4">
+    <BForm @submit="handleSubmit">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="text-center">{{ params.display_name }}</h5>
+        </div>
+        <div class="card-body overflow-y-auto" style="max-height: 76vh; min-height: 76vh">
+          <CardContent>
             <Transition name="fade" mode="out-in">
               <div v-if="!nextPage" class="row justify-content-between">
-                <div
+                <CardContent
                   class="col-4 d-flex flex-column dropzone_background responsive_dropzone rounded-2 p-2"
                 >
                   <DropZone
@@ -105,7 +105,7 @@ window.addEventListener("resize", handleResize);
                       </div>
                     </Transition>
                   </DropZone>
-                </div>
+                </CardContent>
                 <div
                   class="col-8 d-flex flex-column table_background responsive_dropzone rounded-2 p-2"
                 >
@@ -122,8 +122,8 @@ window.addEventListener("resize", handleResize);
                         </BButton>
                       </div>
                     </template>
-                    <BCardBody id="body">
-                      <FilesContent
+                    <BCardBody>
+                      <CardContent
                         :minSize="minSize"
                         :maxSize="maxSize"
                         class="overflow-y-auto overflow-x-hidden"
@@ -137,7 +137,7 @@ window.addEventListener("resize", handleResize);
                             @update:selected="(selected) => updateSelection(item.name, selected)"
                           />
                         </TransitionGroup>
-                      </FilesContent>
+                      </CardContent>
                     </BCardBody>
                     <template #footer>
                       <div class="d-flex gap-2 p-2">
@@ -169,59 +169,65 @@ window.addEventListener("resize", handleResize);
                       <span class="fw-bold">Informações complementares</span>
                     </template>
                     <BCardBody class="overflow-auto responsive_options_selector">
-                      <div class="d-grid gap-5">
-                        <BFormSelect v-model="selected" :options="ex1Options" size="lg" />
-                        <BFormSelect v-model="selected2" :options="ex2Options" size="lg" />
-                        <BFormCheckbox id="checkbox-1" v-model="status" name="checkbox-1">
-                          Confirmo que os dados enviados estão corretos.
-                        </BFormCheckbox>
-                      </div>
+                      <CardContent
+                        :minSize="minSize"
+                        :maxSize="maxSize"
+                        class="overflow-y-auto overflow-x-hidden"
+                      >
+                        <div class="d-grid gap-5">
+                          <BFormSelect v-model="selected" :options="ex1Options" size="lg" />
+                          <BFormSelect v-model="selected2" :options="ex2Options" size="lg" />
+                          <BFormCheckbox id="checkbox-1" v-model="status" name="checkbox-1">
+                            Confirmo que os dados enviados estão corretos.
+                          </BFormCheckbox>
+                        </div>
+                      </CardContent>
                     </BCardBody>
                   </BCard>
                 </BCol>
               </BRow>
             </Transition>
-          </div>
-          <div class="card-footer">
-            <div class="d-flex gap-2 justify-content-end">
-              <Transition name="fade" mode="out-in">
-                <BButton
-                  v-if="nextPage"
-                  variant="outline-primary"
-                  class="rounded-2"
-                  @click="nextPage = !nextPage"
-                >
-                  <span class="fw-semibold"> Voltar </span>
-                </BButton>
-              </Transition>
-              <Transition name="fade" mode="out-in">
-                <BButton
-                  v-if="!nextPage"
-                  class="rounded-2"
-                  variant="outline-success"
-                  size="lg"
-                  @click="nextPage = !nextPage"
-                  :disabled="files.length === 0"
-                >
-                  <span class="fw-semibold"> Próxima Página </span>
-                </BButton>
+          </CardContent>
+        </div>
+        <div class="card-footer">
+          <div class="d-flex gap-2 justify-content-end">
+            <Transition name="fade" mode="out-in">
+              <BButton
+                v-if="nextPage"
+                variant="outline-primary"
+                class="rounded-2"
+                @click="nextPage = !nextPage"
+              >
+                <span class="fw-semibold"> Voltar </span>
+              </BButton>
+            </Transition>
+            <Transition name="fade" mode="out-in">
+              <BButton
+                v-if="!nextPage"
+                class="rounded-2"
+                variant="outline-success"
+                size="lg"
+                @click="nextPage = !nextPage"
+                :disabled="files.length === 0"
+              >
+                <span class="fw-semibold"> Próxima Página </span>
+              </BButton>
 
-                <BButton
-                  v-else-if="nextPage"
-                  :variant="variantComputed"
-                  class="rounded-2"
-                  type="submit"
-                  v-model:disabled="disabledStatus"
-                >
-                  <span class="fw-semibold"> Inicializar Execução </span>
-                </BButton>
-              </Transition>
-            </div>
+              <BButton
+                v-else-if="nextPage"
+                :variant="variantComputed"
+                class="rounded-2"
+                type="submit"
+                v-model:disabled="disabledStatus"
+              >
+                <span class="fw-semibold"> Inicializar Execução </span>
+              </BButton>
+            </Transition>
           </div>
         </div>
-      </BForm>
-    </BContainer>
-  </MainFrame>
+      </div>
+    </BForm>
+  </BContainer>
 </template>
 
 <style lang="scss" scoped>
