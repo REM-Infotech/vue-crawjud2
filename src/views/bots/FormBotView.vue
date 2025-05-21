@@ -3,8 +3,9 @@ import "@/assets/scss/main.scss";
 import { botRecord } from "@/types/botArray";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { styled } from "@vue-styled-components/core";
 import { BContainer } from "bootstrap-vue-next";
-import { onBeforeMount, onUnmounted } from "vue";
+import { onBeforeMount, onUnmounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import DropZone from "./components/FileDropZone.vue";
 import ListFiles from "./components/ListFiles.vue";
@@ -29,6 +30,8 @@ const {
 } = FormSetup();
 let params: botRecord;
 
+const maxSize = ref(window.innerHeight - 500);
+const minSize = ref(window.innerHeight - 500);
 const router = useRouter();
 onBeforeMount(() => {
   params = route.params as unknown as botRecord;
@@ -51,6 +54,18 @@ async function handleSubmit(event: Event) {
   router.push({ name: "logs_execution", params: { pid: "Q9M1E6" } });
   window.electronAPI.add_execution("Q9M1E6");
 }
+const handleResize = () => {
+  maxSize.value = window.innerHeight - 500;
+  minSize.value = window.innerHeight - 500;
+};
+
+const filesContentProps = { minSize: Number, maxSize: Number };
+const FilesContent = styled("div", filesContentProps)`
+  max-height: ${(props) => props.maxSize}px;
+  min-height: ${(props) => props.minSize}px;
+`;
+
+window.addEventListener("resize", handleResize);
 </script>
 
 <template>
@@ -91,7 +106,9 @@ async function handleSubmit(event: Event) {
                     </Transition>
                   </DropZone>
                 </div>
-                <div class="col-8 d-flex flex-column table_background rounded-2 p-2">
+                <div
+                  class="col-8 d-flex flex-column table_background responsive_dropzone rounded-2 p-2"
+                >
                   <BCard>
                     <template #header>
                       <div class="d-flex">
@@ -105,16 +122,22 @@ async function handleSubmit(event: Event) {
                         </BButton>
                       </div>
                     </template>
-                    <BCardBody class="overflow-auto responsive_row">
-                      <TransitionGroup name="list" tag="ul">
-                        <ListFiles
-                          v-for="item in files"
-                          :files="item"
-                          :key="item.name"
-                          :selected="selectedFiles.includes(item.name)"
-                          @update:selected="(selected) => updateSelection(item.name, selected)"
-                        />
-                      </TransitionGroup>
+                    <BCardBody id="body">
+                      <FilesContent
+                        :minSize="minSize"
+                        :maxSize="maxSize"
+                        class="overflow-y-auto overflow-x-hidden"
+                      >
+                        <TransitionGroup name="list" tag="ul">
+                          <ListFiles
+                            v-for="item in files"
+                            :files="item"
+                            :key="item.name"
+                            :selected="selectedFiles.includes(item.name)"
+                            @update:selected="(selected) => updateSelection(item.name, selected)"
+                          />
+                        </TransitionGroup>
+                      </FilesContent>
                     </BCardBody>
                     <template #footer>
                       <div class="d-flex gap-2 p-2">
@@ -205,6 +228,12 @@ async function handleSubmit(event: Event) {
 @import "../../assets/scss/main.scss";
 @import "../../assets/scss/colors.scss";
 
+$content-height: 200px;
+
+.files-card {
+  max-height: $content-height;
+}
+
 .dropzone_background {
   transition:
     background-color 0.4s ease,
@@ -221,18 +250,6 @@ async function handleSubmit(event: Event) {
   transition:
     background-color 0.4s ease,
     color 0.4s ease;
-}
-
-.responsive_options_selector {
-  height: 55vh;
-}
-
-.responsive_dropzone {
-  height: 67vh;
-}
-
-.responsive_row {
-  height: 41vh;
 }
 
 [data-bs-theme="dark"] {

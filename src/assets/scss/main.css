@@ -8737,6 +8737,12 @@ progress {
   background-color: #290f38;
 }
 
+html,
+body,
+#app {
+  height: 100%;
+}
+
 body {
   transition: background-color 0.4s ease, color 0.4s ease;
   overflow-y: hidden;
@@ -8756,10 +8762,10 @@ body {
 }
 
 [data-bs-theme=light] body {
-  background-color: #debef4;
+  background-color: #ca94ec;
 }
 [data-bs-theme=light] .app-navbar {
-  background-color: #a66fdd;
+  background-color: #9150cd;
 }
 
 [data-bs-theme=light] .btn-purple {

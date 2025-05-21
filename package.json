@@ -48,6 +48,8 @@
     "@electron/remote": "^2.1.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
+    "@vue-styled-components/core": "^1.11.3",
+    "@vue-styled-components/plugin": "^1.0.1",
     "axios": "^1.9.0",
     "bootstrap": "^5.3.6",
     "bootstrap-vue-next": "^0.29.3",
