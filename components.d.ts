@@ -8,6 +8,16 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    BButton: typeof import('bootstrap-vue-next/components/BButton')['BButton']
+    BCard: typeof import('bootstrap-vue-next/components/BCard')['BCard']
+    BCardBody: typeof import('bootstrap-vue-next/components/BCard')['BCardBody']
+    BCardImg: typeof import('bootstrap-vue-next/components/BCard')['BCardImg']
+    BCardText: typeof import('bootstrap-vue-next/components/BCard')['BCardText']
+    BCol: typeof import('bootstrap-vue-next/components/BContainer')['BCol']
+    BForm: typeof import('bootstrap-vue-next/components/BForm')['BForm']
+    BFormCheckbox: typeof import('bootstrap-vue-next/components/BFormCheckbox')['BFormCheckbox']
+    BFormSelect: typeof import('bootstrap-vue-next/components/BFormSelect')['BFormSelect']
+    BRow: typeof import('bootstrap-vue-next/components/BContainer')['BRow']
     CardsView: typeof import('./src/components/CardsView.vue')['default']
     CardTemplate: typeof import('./src/components/CardTemplate.vue')['default']
     ChoseThemeView: typeof import('./src/components/ChoseThemeView.vue')['default']

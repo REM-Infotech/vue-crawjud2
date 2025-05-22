@@ -1,6 +1,6 @@
+import { WindowConfig } from "@/types/WindowConfig";
 import { BrowserWindow } from "electron";
 import { WindowLoader } from "../ports/WindowLoader";
-import { WindowConfig } from "../types/WindowConfig";
 
 /**
  * Serviço responsável por criar e gerenciar a janela principal da aplicação.
