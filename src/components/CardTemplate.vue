@@ -3,6 +3,7 @@ import elawImg from "@/assets/svg/elaw.svg";
 import esaj from "@/assets/svg/esaj.svg";
 import projudiImg from "@/assets/svg/projudi.svg";
 import { botRecord } from "@/types/botArray";
+import { BButton } from "bootstrap-vue-next";
 import { useRouter } from "vue-router";
 
 const images = {

@@ -3,6 +3,7 @@ import { io } from "@/renderer";
 import storeLogs from "@/stores/storeLogs";
 import { faPieChart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { BContainer } from "bootstrap-vue-next";
 import { onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 const route = useRoute();

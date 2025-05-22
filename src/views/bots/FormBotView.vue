@@ -5,7 +5,7 @@ import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { styled } from "@vue-styled-components/core";
 import { BContainer } from "bootstrap-vue-next";
-import { onBeforeMount, onUnmounted, ref } from "vue";
+import { onBeforeMount, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import DropZone from "./components/FileDropZone.vue";
 import ListFiles from "./components/ListFiles.vue";
@@ -65,7 +65,15 @@ const CardContent = styled("div", CardContentProps)`
   min-height: ${(props) => props.minSize}px;
 `;
 
+const containsSheet = ref(false);
+
+watch(files, () => {
+  const validade = files.value.some((f) => f.type === xlsx_file);
+  containsSheet.value = validade;
+});
+
 window.addEventListener("resize", handleResize);
+const xlsx_file = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 </script>
 
 <template>
@@ -208,7 +216,7 @@ window.addEventListener("resize", handleResize);
                 variant="outline-success"
                 size="lg"
                 @click="nextPage = !nextPage"
-                :disabled="files.length === 0"
+                :disabled="files.length === 0 && !containsSheet"
               >
                 <span class="fw-semibold"> Próxima Página </span>
               </BButton>
