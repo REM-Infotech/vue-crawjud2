@@ -35,13 +35,24 @@ class FileCollection {
    */
   addUniqueFiles({
     targetFilesRef,
+    percentCounter,
   }: {
     targetFilesRef: Ref<TUploadableFile[]>;
+    percentCounter: Ref<number>;
   }): TUploadableFile[] {
     const newFiles: TUploadableFile[] = [];
     const existingFiles = [...targetFilesRef.value];
+    percentCounter.value = 0;
+    for (let i = 0, len = this.files.length; i < len; i++) {
+      const file = this.files[i];
 
-    for (const file of this.files) {
+      if (FileCollection.existsByName(file, existingFiles)) {
+        setTimeout(() => {
+          const new_Value = ((i + 1) / this.files.length) * 100;
+          percentCounter.value = new_Value;
+        }, 500);
+      }
+
       if (
         !FileCollection.existsByName(file, existingFiles) &&
         !FileCollection.existsByXlsType({ file, files: existingFiles })
@@ -50,7 +61,10 @@ class FileCollection {
         newFiles.push(uploadable);
         existingFiles.push(uploadable);
 
-        io.emit("add_file", { file: uploadable, id_temp: id });
+        io.emit("add_file", { file: uploadable, id_temp: id }, () => {
+          const new_Value = ((i + 1) / this.files.length) * 100;
+          percentCounter.value = new_Value;
+        });
       }
     }
     return newFiles;
@@ -170,13 +184,19 @@ function useFileSelection({ files }: { files: Ref<TUploadableFile[]> }) {
 function useFileUpload({
   files,
   formBotFiles,
+  percentProgress,
 }: {
   files: Ref<TUploadableFile[]>;
   formBotFiles: TUploadableFile[];
+  percentProgress: Ref<number>;
 }): { addFiles: (filesAppend: File[]) => void } {
   const addFiles = (filesAppend: File[]) => {
+    console.log(percentProgress.value);
     const filesListable = new FileCollection(filesAppend);
-    const filesPush = filesListable.addUniqueFiles({ targetFilesRef: files });
+    const filesPush = filesListable.addUniqueFiles({
+      targetFilesRef: files,
+      percentCounter: percentProgress,
+    });
     files.value.push(...filesPush);
     formBotFiles.push(...filesPush);
   };
@@ -201,7 +221,6 @@ function useFormState() {
   const selected = ref(null);
   const selected2 = ref(null);
   const nextPage = ref(false);
-
   const disabledStatus = computed({
     get: () => !status.value,
     set: (val: boolean) => {
@@ -239,10 +258,15 @@ function useFormState() {
  */
 export default function useFormConfig() {
   const files = ref<TUploadableFile[]>([]);
+  const percentProgress = ref(0);
   const FormBot = reactive({ files: [] as TUploadableFile[] });
 
   const fileSelection = useFileSelection({ files });
-  const fileUpload = useFileUpload({ files, formBotFiles: FormBot.files });
+  const fileUpload = useFileUpload({
+    files,
+    formBotFiles: FormBot.files,
+    percentProgress: percentProgress,
+  });
   const formState = useFormState();
 
   const variant = computed(() =>
@@ -256,5 +280,6 @@ export default function useFormConfig() {
     variant,
     FormBot,
     files,
+    percentProgress,
   };
 }

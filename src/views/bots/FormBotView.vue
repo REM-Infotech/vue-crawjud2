@@ -15,9 +15,10 @@ import {
   BForm,
   BFormCheckbox,
   BFormSelect,
+  BProgress,
   BRow,
 } from "bootstrap-vue-next";
-import { onBeforeMount, onUnmounted, ref, watch } from "vue";
+import { computed, onBeforeMount, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import DropZone from "./components/FileDropZone.vue";
 import ListFiles from "./components/ListFiles.vue";
@@ -39,6 +40,7 @@ const {
   status,
   disabledStatus,
   addFiles,
+  percentProgress,
 } = FormSetup();
 
 let params: botRecord;
@@ -81,6 +83,12 @@ watch(files, () => {
   containsSheet.value = validade;
 });
 
+watch(percentProgress, (newvalue) => {
+  console.log("testeste", newvalue);
+});
+
+const countPercent = computed(() => percentProgress.value >= 100);
+
 async function handleSubmit(event: Event) {
   event.preventDefault();
   router.push({ name: "logs_execution", params: { pid: "Q9M1E6" } });
@@ -110,7 +118,11 @@ window.addEventListener("resize", handleResize);
                 >
                   <DropZone
                     v-model="FormBot.files"
-                    @files-dropped="addFiles"
+                    @files-dropped="
+                      (files) => {
+                        addFiles(files);
+                      }
+                    "
                     #default="{ dropZoneActive }"
                     class="rounded-2 flex-grow-1 d-flex flex-column justify-content-center align-items-center"
                   >
@@ -131,6 +143,12 @@ window.addEventListener("resize", handleResize);
                       </div>
                     </Transition>
                   </DropZone>
+
+                  <Transition name="fade">
+                    <div v-if="percentProgress > 0 && !(percentProgress === 100)">
+                      <BProgress variant="info" :value="percentProgress" striped animated />
+                    </div>
+                  </Transition>
                 </CardContent>
                 <div
                   class="col-8 d-flex flex-column table_background responsive_dropzone rounded-2 p-2"
@@ -234,7 +252,7 @@ window.addEventListener("resize", handleResize);
                 variant="outline-success"
                 size="lg"
                 @click="nextPage = !nextPage"
-                :disabled="files.length === 0 && !containsSheet"
+                :disabled="files.length === 0 || !countPercent"
               >
                 <span class="fw-semibold"> Próxima Página </span>
               </BButton>
