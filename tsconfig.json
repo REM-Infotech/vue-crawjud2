@@ -7,12 +7,12 @@
     "moduleResolution": "node",
     "noImplicitAny": true,
     "outDir": "dist",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "target": "ESNext",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "target": "ESNext"
   }
 }

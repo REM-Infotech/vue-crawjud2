@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import "@/assets/scss/main.scss";
+import { OptionType } from "@/types/bot";
 import { botRecord } from "@/types/botArray";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -36,8 +37,6 @@ const router = useRouter();
 onBeforeMount(() => {
   params = route.params as unknown as botRecord;
 });
-
-type OptionType = { value: string | null; text: string; disabled?: boolean };
 
 const ex1Options: OptionType[] = [
   { value: null, text: "Selecione uma Credencial", disabled: true },
