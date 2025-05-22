@@ -1,6 +1,9 @@
+import { io } from "@/renderer";
 import type { TUploadableFile } from "@/types/FormBot";
 import { computed, reactive, ref, type Ref } from "vue";
 
+const xlsx_file = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+const id = crypto.randomUUID();
 /**
  * Represents a collection of `File` objects and provides utility methods
  * for managing and filtering files before uploading.
@@ -41,18 +44,20 @@ class FileCollection {
     for (const file of this.files) {
       if (
         !FileCollection.existsByName(file, existingFiles) &&
-        !FileCollection.existsByType({ file, files: existingFiles })
+        !FileCollection.existsByXlsType({ file, files: existingFiles })
       ) {
         const uploadable = new UploadableFile(file);
         newFiles.push(uploadable);
         existingFiles.push(uploadable);
+
+        io.emit("add_file", { file: uploadable, id_temp: id });
       }
     }
     return newFiles;
   }
 
-  static existsByType({ file, files }: { file: File; files: TUploadableFile[] }): boolean {
-    return files.some((f) => f.type === file.type);
+  static existsByXlsType({ file, files }: { file: File; files: TUploadableFile[] }): boolean {
+    return files.some((f) => f.type === file.type && file.type === xlsx_file);
   }
 
   static existsByName(file: File, files: TUploadableFile[]) {
@@ -130,7 +135,12 @@ function useFileSelection({ files }: { files: Ref<TUploadableFile[]> }) {
   function removeSelectedFiles() {
     selectedFiles.value.forEach((fileName) => {
       const index = files.value.findIndex((file) => file.name === fileName);
-      if (index !== -1) files.value.splice(index, 1);
+
+      if (index !== -1) {
+        const file = files.value[index];
+        io.emit("remove_file", { temp_id: id, file: file });
+        files.value.splice(index, 1);
+      }
     });
     selectedFiles.value = [];
   }

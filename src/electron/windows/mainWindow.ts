@@ -25,6 +25,6 @@ export async function createWindow() {
   // view.webContents.loadURL("https://crawjud.robotz.dev");
 
   // mainWindow.contentView.removeChildView(view);
-
+  mainWindow.setMenuBarVisibility(false);
   await modeLoadWindow[isDev ? "true" : "false"](mainWindow);
 }
