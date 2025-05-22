@@ -4,7 +4,6 @@ import { ref } from "vue";
 import { RouterView } from "vue-router";
 import ChoseThemeView from "./components/ChoseThemeView.vue";
 import NavbarView from "./components/NavbarView.vue";
-
 const maxSize = ref(window.innerHeight - 500);
 const minSize = ref(window.innerHeight - 500);
 

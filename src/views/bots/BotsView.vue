@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import botsList from "@/assets/json/bots_list.json";
+import MainFrame from "@/components/MainFrame.vue";
 import { botRecord } from "@/types/botArray";
 import CardsView from "./components/CardsView.vue";
 const cards: botRecord[] = botsList;

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import MainFrame from "@/components/MainFrame.vue";
 import { io } from "@/renderer";
 import storeLogs from "@/stores/storeLogs";
 import { faPieChart } from "@fortawesome/free-solid-svg-icons";

@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { title } from "process";
-import CardsView from "../../components/CardsView.vue";
-import { fileURLToPath, URL } from "url";
 import MainFrame from "@/components/MainFrame.vue";
+import CardsView from "../../components/CardsView.vue";
 
 const cards = [
   {

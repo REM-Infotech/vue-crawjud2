@@ -3,7 +3,7 @@ import elawImg from "@/assets/svg/elaw.svg";
 import esaj from "@/assets/svg/esaj.svg";
 import projudiImg from "@/assets/svg/projudi.svg";
 import botimg from "@/assets/svg/robot-icon.svg";
-
+import { BCard, BCardImg, BCardText } from "bootstrap-vue-next";
 const images = {
   elaw: elawImg,
   projudi: projudiImg,

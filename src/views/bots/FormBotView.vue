@@ -1,11 +1,22 @@
 <script setup lang="ts">
 import "@/assets/scss/main.scss";
+import { io } from "@/renderer";
 import { OptionType } from "@/types/bot";
 import { botRecord } from "@/types/botArray";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { styled } from "@vue-styled-components/core";
-import { BContainer } from "bootstrap-vue-next";
+import {
+  BButton,
+  BCard,
+  BCardBody,
+  BCol,
+  BContainer,
+  BForm,
+  BFormCheckbox,
+  BFormSelect,
+  BRow,
+} from "bootstrap-vue-next";
 import { onBeforeMount, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import DropZone from "./components/FileDropZone.vue";
@@ -29,23 +40,45 @@ const {
   disabledStatus,
   addFiles,
 } = FormSetup();
+
 let params: botRecord;
 
+const CardContentProps = { minSize: Number, maxSize: Number };
+const containsSheet = ref(false);
 const maxSize = ref(window.innerHeight - 500);
 const minSize = ref(window.innerHeight - 500);
 const router = useRouter();
+
+const ex1Options = ref<OptionType[]>([]);
+const ex2Options = ref<OptionType[]>([]);
+
+const CardContent = styled("div", CardContentProps)`
+  max-height: ${(props) => props.maxSize}px;
+  min-height: ${(props) => props.minSize}px;
+`;
+
+const xlsx_file = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
 onBeforeMount(() => {
   params = route.params as unknown as botRecord;
+
+  io.emit(
+    "get_selectors_data",
+    { system: route.params.system },
+    (data: Record<string, OptionType[]>) => {
+      ex1Options.value = data.credentials;
+      ex2Options.value = data.other_info;
+    },
+  );
 });
-
-const ex1Options: OptionType[] = [
-  { value: null, text: "Selecione uma Credencial", disabled: true },
-];
-
-const ex2Options: OptionType[] = [{ value: null, text: "Selecione o Estado", disabled: true }];
 
 onUnmounted(() => {
   nextPage.value = false;
+});
+
+watch(files, () => {
+  const validade = files.value.some((f) => f.type === xlsx_file);
+  containsSheet.value = validade;
 });
 
 async function handleSubmit(event: Event) {
@@ -58,21 +91,7 @@ const handleResize = () => {
   minSize.value = window.innerHeight - 500;
 };
 
-const CardContentProps = { minSize: Number, maxSize: Number };
-const CardContent = styled("div", CardContentProps)`
-  max-height: ${(props) => props.maxSize}px;
-  min-height: ${(props) => props.minSize}px;
-`;
-
-const containsSheet = ref(false);
-
-watch(files, () => {
-  const validade = files.value.some((f) => f.type === xlsx_file);
-  containsSheet.value = validade;
-});
-
 window.addEventListener("resize", handleResize);
-const xlsx_file = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 </script>
 
 <template>
