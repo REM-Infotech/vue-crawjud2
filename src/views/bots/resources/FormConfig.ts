@@ -1,6 +1,6 @@
-import { io } from "@/renderer";
 import type { TUploadableFile } from "@/types/FormBot";
 import { computed, reactive, ref, type Ref } from "vue";
+import { io } from "../../../renderer";
 
 const xlsx_file = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 const id = crypto.randomUUID();
