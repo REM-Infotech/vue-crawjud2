@@ -77,13 +77,13 @@ const xlsx_file = "application/vnd.openxmlformats-officedocument.spreadsheetml.s
 </script>
 
 <template>
-  <BContainer fluid class="mt-4">
+  <BContainer fluid="md" class="mt-4">
     <BForm @submit="handleSubmit">
       <div class="card">
         <div class="card-header">
           <h5 class="text-center">{{ params.display_name }}</h5>
         </div>
-        <div class="card-body overflow-y-auto" style="max-height: 76vh">
+        <div class="card-body overflow-y-auto" style="max-height: 74vh; min-height: 74vh">
           <CardContent>
             <Transition name="fade" mode="out-in">
               <div v-if="!nextPage" class="row justify-content-between">
