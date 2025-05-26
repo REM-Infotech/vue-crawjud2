@@ -109,7 +109,7 @@ window.addEventListener("resize", handleResize);
         <div class="card-header">
           <h5 class="text-center">{{ params.display_name }}</h5>
         </div>
-        <div class="card-body overflow-y-auto" style="max-height: 70vh; min-height: 70vh">
+        <div class="card-body overflow-y-auto" style="max-height: 75vh; min-height: 75vh">
           <CardContent>
             <Transition name="fade" mode="out-in">
               <div v-if="!nextPage" class="row justify-content-between">
